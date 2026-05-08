@@ -22,6 +22,11 @@
 
       try {
         const response = await fetch(webhookUrl, { method: "GET" });
+const data = await response.json();
+
+console.log("Raw response:", data);         // See the full structure
+console.log("Type:", typeof data);           // object? array?
+document.getElementById("webhook-output").innerHTML = JSON.stringify(data, null, 2);
 
         if (response.ok) {
           const data = await response.json(); // or response.text() if not JSON
