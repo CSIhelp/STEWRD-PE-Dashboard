@@ -1,0 +1,6 @@
+# nixpacks.toml
+[phases.setup]
+nixPkgs = ["nodejs"]
+
+[start]
+cmd = "npx serve . -p $PORT"
