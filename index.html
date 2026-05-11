@@ -3,59 +3,68 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Employee Management System</title>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <title>Employee Dashboard</title>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;700&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
   <style>
+    :root {
+      --color-bg: #fafbfc;
+      --color-surface: #ffffff;
+      --color-border: #e1e4e8;
+      --color-text: #1a1f36;
+      --color-text-secondary: #697386;
+      --color-primary: #2563eb;
+      --color-primary-hover: #1d4ed8;
+      --color-success: #059669;
+      --color-danger: #dc2626;
+      --color-warning: #f59e0b;
+      --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.04);
+      --shadow-md: 0 4px 6px rgba(0, 0, 0, 0.07);
+      --shadow-lg: 0 10px 15px rgba(0, 0, 0, 0.1);
+      --radius: 8px;
+      --transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
     * {
       margin: 0;
       padding: 0;
       box-sizing: border-box;
     }
 
-    :root {
-      --primary: #0066cc;
-      --primary-dark: #0052a3;
-      --success: #00a86b;
-      --danger: #dc3545;
-      --warning: #ffc107;
-      --gray-50: #f8f9fa;
-      --gray-100: #e9ecef;
-      --gray-200: #dee2e6;
-      --gray-300: #ced4da;
-      --gray-600: #6c757d;
-      --gray-800: #343a40;
-      --gray-900: #212529;
-      --white: #ffffff;
-    }
-
     body {
-      font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
-      background: var(--gray-50);
-      color: var(--gray-900);
-      line-height: 1.5;
+      font-family: 'DM Sans', -apple-system, BlinkMacSystemFont, sans-serif;
+      background: var(--color-bg);
+      color: var(--color-text);
+      line-height: 1.6;
+      padding: 2rem;
+      min-height: 100vh;
     }
 
     .container {
       max-width: 1400px;
       margin: 0 auto;
-      padding: 2rem;
+      animation: fadeIn 0.5s ease-out;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(10px); }
+      to { opacity: 1; transform: translateY(0); }
     }
 
     /* Header */
     .header {
-      background: var(--white);
-      padding: 1.5rem 2rem;
-      margin: -2rem -2rem 2rem -2rem;
-      border-bottom: 1px solid var(--gray-200);
       display: flex;
       justify-content: space-between;
       align-items: center;
+      margin-bottom: 2rem;
+      padding-bottom: 1.5rem;
+      border-bottom: 2px solid var(--color-border);
     }
 
     .header h1 {
-      font-size: 1.5rem;
-      font-weight: 600;
-      color: var(--gray-900);
+      font-size: 2rem;
+      font-weight: 700;
+      color: var(--color-text);
+      letter-spacing: -0.02em;
     }
 
     .header-actions {
@@ -67,22 +76,24 @@
     /* Search */
     .search-box {
       position: relative;
+      width: 300px;
     }
 
     .search-box input {
-      width: 280px;
-      padding: 0.5rem 0.75rem 0.5rem 2.25rem;
-      border: 1px solid var(--gray-300);
-      border-radius: 4px;
+      width: 100%;
+      padding: 0.75rem 1rem 0.75rem 2.5rem;
+      border: 1px solid var(--color-border);
+      border-radius: var(--radius);
       font-size: 0.875rem;
       font-family: inherit;
-      transition: all 0.2s;
+      transition: var(--transition);
+      background: var(--color-surface);
     }
 
     .search-box input:focus {
       outline: none;
-      border-color: var(--primary);
-      box-shadow: 0 0 0 3px rgba(0, 102, 204, 0.1);
+      border-color: var(--color-primary);
+      box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1);
     }
 
     .search-icon {
@@ -90,58 +101,74 @@
       left: 0.75rem;
       top: 50%;
       transform: translateY(-50%);
-      color: var(--gray-600);
+      color: var(--color-text-secondary);
+      pointer-events: none;
     }
 
     /* Buttons */
     .btn {
-      padding: 0.5rem 1rem;
+      padding: 0.75rem 1.5rem;
       border: none;
-      border-radius: 4px;
+      border-radius: var(--radius);
       font-size: 0.875rem;
       font-weight: 500;
       font-family: inherit;
       cursor: pointer;
-      transition: all 0.2s;
+      transition: var(--transition);
       display: inline-flex;
       align-items: center;
       gap: 0.5rem;
+      white-space: nowrap;
     }
 
     .btn-primary {
-      background: var(--primary);
+      background: var(--color-primary);
       color: white;
+      box-shadow: var(--shadow-sm);
     }
 
     .btn-primary:hover {
-      background: var(--primary-dark);
+      background: var(--color-primary-hover);
+      box-shadow: var(--shadow-md);
+      transform: translateY(-1px);
     }
 
     .btn-secondary {
-      background: var(--gray-100);
-      color: var(--gray-800);
+      background: var(--color-surface);
+      color: var(--color-text);
+      border: 1px solid var(--color-border);
     }
 
     .btn-secondary:hover {
-      background: var(--gray-200);
+      background: var(--color-bg);
+      border-color: var(--color-text-secondary);
+    }
+
+    .btn-small {
+      padding: 0.4rem 0.8rem;
+      font-size: 0.8rem;
     }
 
     .btn-danger {
-      background: var(--danger);
+      background: var(--color-danger);
       color: white;
     }
 
     .btn-danger:hover {
-      background: #c82333;
+      background: #b91c1c;
     }
 
-    .btn-sm {
-      padding: 0.35rem 0.75rem;
-      font-size: 0.8rem;
+    .btn-success {
+      background: var(--color-success);
+      color: white;
     }
 
-    /* Stats */
-    .stats {
+    .btn-success:hover {
+      background: #047857;
+    }
+
+    /* Stats Bar */
+    .stats-bar {
       display: grid;
       grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
       gap: 1rem;
@@ -149,33 +176,42 @@
     }
 
     .stat-card {
-      background: var(--white);
-      padding: 1.25rem;
-      border-radius: 4px;
-      border: 1px solid var(--gray-200);
+      background: var(--color-surface);
+      padding: 1.5rem;
+      border-radius: var(--radius);
+      border: 1px solid var(--color-border);
+      box-shadow: var(--shadow-sm);
+      transition: var(--transition);
+    }
+
+    .stat-card:hover {
+      box-shadow: var(--shadow-md);
+      transform: translateY(-2px);
     }
 
     .stat-label {
       font-size: 0.75rem;
       text-transform: uppercase;
-      letter-spacing: 0.5px;
-      color: var(--gray-600);
-      font-weight: 500;
+      letter-spacing: 0.05em;
+      color: var(--color-text-secondary);
+      font-weight: 600;
       margin-bottom: 0.5rem;
     }
 
     .stat-value {
       font-size: 1.75rem;
       font-weight: 700;
-      color: var(--gray-900);
+      color: var(--color-text);
+      font-family: 'JetBrains Mono', monospace;
     }
 
-    /* Table */
+    /* Table Container */
     .table-container {
-      background: var(--white);
-      border-radius: 4px;
-      border: 1px solid var(--gray-200);
+      background: var(--color-surface);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow-md);
       overflow: hidden;
+      border: 1px solid var(--color-border);
     }
 
     .table-wrapper {
@@ -189,64 +225,65 @@
     }
 
     thead {
-      background: var(--gray-50);
+      background: var(--color-bg);
+      position: sticky;
+      top: 0;
+      z-index: 10;
     }
 
     th {
       text-align: left;
-      padding: 0.875rem 1rem;
+      padding: 1rem;
       font-weight: 600;
-      color: var(--gray-800);
+      color: var(--color-text-secondary);
       text-transform: uppercase;
       font-size: 0.75rem;
-      letter-spacing: 0.5px;
-      border-bottom: 2px solid var(--gray-200);
+      letter-spacing: 0.05em;
+      border-bottom: 2px solid var(--color-border);
+      white-space: nowrap;
     }
 
     tbody tr {
-      border-bottom: 1px solid var(--gray-200);
-      transition: background 0.15s;
+      border-bottom: 1px solid var(--color-border);
+      transition: var(--transition);
     }
 
     tbody tr:hover {
-      background: var(--gray-50);
-    }
-
-    tbody tr:last-child {
-      border-bottom: none;
+      background: var(--color-bg);
     }
 
     td {
       padding: 1rem;
-      color: var(--gray-800);
+      color: var(--color-text);
     }
 
     .employee-name {
       font-weight: 600;
-      color: var(--gray-900);
+      color: var(--color-text);
     }
 
-    .badge {
+    .status-badge {
       display: inline-block;
-      padding: 0.25rem 0.65rem;
-      border-radius: 3px;
+      padding: 0.25rem 0.75rem;
+      border-radius: 9999px;
       font-size: 0.75rem;
       font-weight: 500;
+      text-transform: capitalize;
     }
 
-    .badge-success {
-      background: #d4edda;
-      color: #155724;
+    .status-regular {
+      background: #d1fae5;
+      color: #065f46;
     }
 
-    .badge-primary {
-      background: #cce5ff;
-      color: #004085;
+    .status-active {
+      background: #dbeafe;
+      color: #1e40af;
     }
 
-    .badge-warning {
-      background: #fff3cd;
-      color: #856404;
+    .status-probation {
+      background: #fef3c7;
+      color: #92400e;
     }
 
     .actions {
@@ -254,28 +291,27 @@
       gap: 0.5rem;
     }
 
-    .btn-icon {
-      padding: 0.4rem 0.6rem;
-      background: var(--gray-100);
+    .icon-btn {
+      background: none;
       border: none;
-      border-radius: 3px;
       cursor: pointer;
-      color: var(--gray-700);
-      font-size: 0.875rem;
-      transition: all 0.15s;
+      padding: 0.4rem;
+      border-radius: 4px;
+      transition: var(--transition);
+      color: var(--color-text-secondary);
+      display: flex;
+      align-items: center;
+      justify-content: center;
     }
 
-    .btn-icon:hover {
-      background: var(--gray-200);
-      color: var(--gray-900);
+    .icon-btn:hover {
+      background: var(--color-bg);
+      color: var(--color-text);
     }
 
-    .btn-icon.delete {
-      color: var(--danger);
-    }
-
-    .btn-icon.delete:hover {
-      background: #f8d7da;
+    .icon-btn.delete:hover {
+      background: #fee;
+      color: var(--color-danger);
     }
 
     /* Modal */
@@ -287,9 +323,11 @@
       right: 0;
       bottom: 0;
       background: rgba(0, 0, 0, 0.5);
+      backdrop-filter: blur(4px);
       z-index: 1000;
       align-items: center;
       justify-content: center;
+      animation: fadeIn 0.2s ease-out;
     }
 
     .modal-overlay.active {
@@ -297,27 +335,32 @@
     }
 
     .modal {
-      background: var(--white);
-      border-radius: 4px;
+      background: var(--color-surface);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow-lg);
       max-width: 600px;
       width: 90%;
       max-height: 90vh;
       overflow-y: auto;
-      box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+      animation: slideUp 0.3s ease-out;
+    }
+
+    @keyframes slideUp {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
     }
 
     .modal-header {
-      padding: 1.25rem 1.5rem;
-      border-bottom: 1px solid var(--gray-200);
+      padding: 1.5rem;
+      border-bottom: 1px solid var(--color-border);
       display: flex;
       justify-content: space-between;
       align-items: center;
     }
 
     .modal-header h2 {
-      font-size: 1.125rem;
+      font-size: 1.25rem;
       font-weight: 600;
-      color: var(--gray-900);
     }
 
     .modal-close {
@@ -325,19 +368,20 @@
       border: none;
       font-size: 1.5rem;
       cursor: pointer;
-      color: var(--gray-600);
+      color: var(--color-text-secondary);
+      padding: 0;
       width: 2rem;
       height: 2rem;
       display: flex;
       align-items: center;
       justify-content: center;
-      border-radius: 3px;
-      transition: all 0.15s;
+      border-radius: 4px;
+      transition: var(--transition);
     }
 
     .modal-close:hover {
-      background: var(--gray-100);
-      color: var(--gray-900);
+      background: var(--color-bg);
+      color: var(--color-text);
     }
 
     .modal-body {
@@ -345,33 +389,34 @@
     }
 
     .form-group {
-      margin-bottom: 1.25rem;
+      margin-bottom: 1.5rem;
     }
 
     .form-group label {
       display: block;
       font-weight: 500;
       margin-bottom: 0.5rem;
-      color: var(--gray-800);
+      color: var(--color-text);
       font-size: 0.875rem;
     }
 
     .form-group input,
     .form-group select {
       width: 100%;
-      padding: 0.5rem 0.75rem;
-      border: 1px solid var(--gray-300);
-      border-radius: 4px;
+      padding: 0.75rem;
+      border: 1px solid var(--color-border);
+      border-radius: var(--radius);
       font-size: 0.875rem;
       font-family: inherit;
-      transition: all 0.2s;
+      transition: var(--transition);
+      background: var(--color-surface);
     }
 
     .form-group input:focus,
     .form-group select:focus {
       outline: none;
-      border-color: var(--primary);
-      box-shadow: 0 0 0 3px rgba(0, 102, 204, 0.1);
+      border-color: var(--color-primary);
+      box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1);
     }
 
     .form-row {
@@ -381,24 +426,23 @@
     }
 
     .modal-footer {
-      padding: 1rem 1.5rem;
-      border-top: 1px solid var(--gray-200);
+      padding: 1.5rem;
+      border-top: 1px solid var(--color-border);
       display: flex;
       justify-content: flex-end;
-      gap: 0.75rem;
-      background: var(--gray-50);
+      gap: 1rem;
     }
 
-    /* Loading */
+    /* Loading State */
     .loading {
       text-align: center;
       padding: 3rem;
-      color: var(--gray-600);
+      color: var(--color-text-secondary);
     }
 
     .spinner {
-      border: 3px solid var(--gray-200);
-      border-top: 3px solid var(--primary);
+      border: 3px solid var(--color-border);
+      border-top: 3px solid var(--color-primary);
       border-radius: 50%;
       width: 40px;
       height: 40px;
@@ -414,53 +458,35 @@
     /* Empty State */
     .empty-state {
       text-align: center;
-      padding: 3rem 2rem;
-      color: var(--gray-600);
+      padding: 4rem 2rem;
+      color: var(--color-text-secondary);
     }
 
-    /* Toast */
-    .toast {
-      position: fixed;
-      top: 2rem;
-      right: 2rem;
-      background: var(--white);
-      padding: 1rem 1.25rem;
-      border-radius: 4px;
-      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
-      border-left: 4px solid var(--success);
-      display: flex;
-      align-items: center;
-      gap: 0.75rem;
-      z-index: 2000;
-      animation: slideIn 0.3s ease-out;
-    }
-
-    .toast.error {
-      border-left-color: var(--danger);
-    }
-
-    @keyframes slideIn {
-      from { transform: translateX(400px); opacity: 0; }
-      to { transform: translateX(0); opacity: 1; }
+    .empty-state svg {
+      width: 80px;
+      height: 80px;
+      margin-bottom: 1rem;
+      opacity: 0.5;
     }
 
     /* Responsive */
     @media (max-width: 768px) {
-      .container {
+      body {
         padding: 1rem;
       }
 
       .header {
         flex-direction: column;
         gap: 1rem;
-        align-items: stretch;
+        align-items: flex-start;
       }
 
       .header-actions {
+        width: 100%;
         flex-direction: column;
       }
 
-      .search-box input {
+      .search-box {
         width: 100%;
       }
 
@@ -468,7 +494,7 @@
         grid-template-columns: 1fr;
       }
 
-      .stats {
+      .stats-bar {
         grid-template-columns: 1fr;
       }
 
@@ -480,34 +506,72 @@
         padding: 0.75rem 0.5rem;
       }
     }
+
+    /* Toast Notifications */
+    .toast {
+      position: fixed;
+      bottom: 2rem;
+      right: 2rem;
+      background: var(--color-surface);
+      padding: 1rem 1.5rem;
+      border-radius: var(--radius);
+      box-shadow: var(--shadow-lg);
+      border: 1px solid var(--color-border);
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      animation: slideIn 0.3s ease-out;
+      z-index: 2000;
+      max-width: 400px;
+    }
+
+    @keyframes slideIn {
+      from { transform: translateX(400px); opacity: 0; }
+      to { transform: translateX(0); opacity: 1; }
+    }
+
+    .toast.success {
+      border-left: 4px solid var(--color-success);
+    }
+
+    .toast.error {
+      border-left: 4px solid var(--color-danger);
+    }
+
+    .toast-message {
+      flex: 1;
+      font-size: 0.875rem;
+    }
   </style>
 </head>
 <body>
-  <!-- Header -->
-  <div class="header">
-    <h1>Employee Management System</h1>
-    <div class="header-actions">
-      <div class="search-box">
-        <span class="search-icon">🔍</span>
-        <input type="text" id="searchInput" placeholder="Search employees..." />
-      </div>
-      <button class="btn btn-primary" onclick="openAddModal()">+ Add Employee</button>
-    </div>
-  </div>
-
   <div class="container">
-    <!-- Stats -->
-    <div class="stats">
+    <!-- Header -->
+    <div class="header">
+      <h1>Employee Dashboard</h1>
+      <div class="header-actions">
+        <div class="search-box">
+          <span class="search-icon">🔍</span>
+          <input type="text" id="searchInput" placeholder="Search employees..." />
+        </div>
+        <button class="btn btn-primary" onclick="openAddModal()">
+          ➕ Add Employee
+        </button>
+      </div>
+    </div>
+
+    <!-- Stats Bar -->
+    <div class="stats-bar">
       <div class="stat-card">
         <div class="stat-label">Total Employees</div>
         <div class="stat-value" id="totalEmployees">-</div>
       </div>
       <div class="stat-card">
-        <div class="stat-label">Active</div>
+        <div class="stat-label">Active Status</div>
         <div class="stat-value" id="activeEmployees">-</div>
       </div>
       <div class="stat-card">
-        <div class="stat-label">Regular</div>
+        <div class="stat-label">Regular Status</div>
         <div class="stat-value" id="regularEmployees">-</div>
       </div>
       <div class="stat-card">
@@ -523,7 +587,7 @@
         <p>Loading employees...</p>
       </div>
       <div id="tableWrapper" class="table-wrapper" style="display: none;">
-        <table>
+        <table id="employeeTable">
           <thead>
             <tr>
               <th>Name</th>
@@ -539,17 +603,24 @@
               <th>Actions</th>
             </tr>
           </thead>
-          <tbody id="employeeTableBody"></tbody>
+          <tbody id="employeeTableBody">
+          </tbody>
         </table>
       </div>
       <div id="emptyState" class="empty-state" style="display: none;">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path>
+          <circle cx="9" cy="7" r="4"></circle>
+          <path d="M23 21v-2a4 4 0 0 0-3-3.87"></path>
+          <path d="M16 3.13a4 4 0 0 1 0 7.75"></path>
+        </svg>
         <h3>No employees found</h3>
         <p>Start by adding your first employee</p>
       </div>
     </div>
   </div>
 
-  <!-- Modal -->
+  <!-- Add/Edit Modal -->
   <div class="modal-overlay" id="employeeModal">
     <div class="modal">
       <div class="modal-header">
@@ -633,45 +704,121 @@
   </div>
 
   <script>
+    // IMMEDIATE CONSOLE TEST
+    console.log("========================================");
+    console.log("🚀 SCRIPT LOADED - Console is working!");
+    console.log("========================================");
+
+    // Global variables
     let employees = [];
     let editingEmployeeId = null;
     const API_BASE = "https://primary-production-a810.up.railway.app/webhook";
 
+    console.log("API Base URL:", API_BASE);
+
     // Initialize
     window.addEventListener("load", () => {
+      console.log("✅ Page loaded, starting initialization...");
       loadEmployees();
       setupSearch();
     });
 
-    // Load employees
+    // Load employees from API
     async function loadEmployees() {
+      console.log("📡 Starting loadEmployees function...");
+      
       const loadingState = document.getElementById("loadingState");
       const tableWrapper = document.getElementById("tableWrapper");
       const emptyState = document.getElementById("emptyState");
+      
+      const fetchUrl = `${API_BASE}/GET/pe-db/employees`;
+      console.log("🔗 Fetching from:", fetchUrl);
 
       try {
-        const response = await fetch(`${API_BASE}/GET/pe-db/employees`);
-        if (!response.ok) throw new Error("Failed to fetch employees");
+        console.log("⏳ Making fetch request...");
+        const response = await fetch(fetchUrl, {
+          method: "GET"
+        });
 
-        const data = await response.json();
-        employees = Array.isArray(data) ? data : [data];
+        console.log("📥 Response received!");
+        console.log("Response status:", response.status);
+        console.log("Response OK?", response.ok);
+
+        if (!response.ok) {
+          throw new Error(`HTTP ${response.status}: Failed to fetch employees`);
+        }
+
+        console.log("🔄 Parsing JSON...");
+        const rawData = await response.json();
+        
+        // DEBUG: Log the raw response
+        console.log("=== DEBUG INFO ===");
+        console.log("Raw response:", rawData);
+        console.log("Raw response (stringified):", JSON.stringify(rawData, null, 2));
+        console.log("Type of response:", typeof rawData);
+        console.log("Is Array?", Array.isArray(rawData));
+        
+        if (Array.isArray(rawData)) {
+          console.log("✅ Array length:", rawData.length);
+          console.log("First item:", rawData[0]);
+          if (rawData.length > 1) {
+            console.log("Second item:", rawData[1]);
+          }
+          if (rawData.length > 2) {
+            console.log("Third item:", rawData[2]);
+          }
+        } else if (rawData && typeof rawData === 'object') {
+          console.log("📦 Object keys:", Object.keys(rawData));
+          console.log("Full object:", rawData);
+        }
+        
+        // Try to intelligently parse the response
+        let parsedData;
+        if (Array.isArray(rawData)) {
+          // If it's an array, use all items
+          parsedData = rawData;
+          console.log("✅ Using entire array with", parsedData.length, "items");
+        } else if (rawData && typeof rawData === 'object') {
+          // If it's an object, wrap it in an array
+          parsedData = [rawData];
+          console.log("📦 Wrapping single object in array");
+        } else {
+          parsedData = [];
+          console.log("❌ Unknown data format, using empty array");
+        }
+        
+        employees = parsedData;
+        console.log("✅ Final employees array:", employees);
+        console.log("✅ Total employees loaded:", employees.length);
+        console.log("=== END DEBUG ===");
+        
+        // Show debug info on page
+        showDebugInfo(rawData, employees);
+        
+        // Also show raw JSON on page
+        showRawJSON(rawData);
         
         loadingState.style.display = "none";
 
         if (employees.length === 0) {
+          console.warn("⚠️ No employees found, showing empty state");
           emptyState.style.display = "block";
           tableWrapper.style.display = "none";
         } else {
+          console.log("✅ Rendering", employees.length, "employees");
           emptyState.style.display = "none";
           tableWrapper.style.display = "block";
           renderEmployees(employees);
           updateStats();
         }
       } catch (error) {
-        console.error("Error loading employees:", error);
+        console.error("❌ ERROR in loadEmployees:", error);
+        console.error("Error details:", error.message);
+        console.error("Error stack:", error.stack);
         loadingState.innerHTML = `
-          <div style="color: var(--danger);">
-            <p>Failed to load employees</p>
+          <div style="color: var(--color-danger);">
+            <p>❌ Failed to load employees</p>
+            <p style="font-size: 0.875rem; margin-top: 0.5rem;">${error.message}</p>
             <button class="btn btn-primary" onclick="loadEmployees()" style="margin-top: 1rem;">Retry</button>
           </div>
         `;
@@ -679,31 +826,121 @@
       }
     }
 
-    // Render employees
+    // Show debug information
+    function showDebugInfo(rawData, processedData) {
+      let debugPanel = document.getElementById("debugPanel");
+      if (!debugPanel) {
+        debugPanel = document.createElement("div");
+        debugPanel.id = "debugPanel";
+        debugPanel.style.cssText = `
+          position: fixed;
+          bottom: 1rem;
+          left: 1rem;
+          background: #1a1f36;
+          color: #fff;
+          padding: 1rem;
+          border-radius: 8px;
+          font-family: 'JetBrains Mono', monospace;
+          font-size: 0.75rem;
+          max-width: 400px;
+          box-shadow: 0 10px 15px rgba(0,0,0,0.3);
+          z-index: 9999;
+        `;
+        document.body.appendChild(debugPanel);
+      }
+      
+      debugPanel.innerHTML = `
+        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.5rem;">
+          <strong style="color: #10b981;">🐛 Debug Info</strong>
+          <button onclick="document.getElementById('debugPanel').remove()" style="background: none; border: none; color: #fff; cursor: pointer; font-size: 1.2rem;">×</button>
+        </div>
+        <div style="background: #0f1419; padding: 0.75rem; border-radius: 4px; overflow-x: auto;">
+          <div><strong>Is Array:</strong> ${Array.isArray(rawData)}</div>
+          <div><strong>Raw Length:</strong> ${Array.isArray(rawData) ? rawData.length : 'N/A'}</div>
+          <div><strong>Processed Count:</strong> ${processedData.length}</div>
+          <div style="margin-top: 0.5rem; padding-top: 0.5rem; border-top: 1px solid #374151;">
+            <strong>Raw Response Type:</strong> ${typeof rawData}
+          </div>
+        </div>
+        <button onclick="document.getElementById('rawJsonPanel').style.display='block'" style="margin-top: 0.5rem; background: #10b981; color: white; border: none; padding: 0.5rem; border-radius: 4px; cursor: pointer; width: 100%; font-size: 0.75rem;">
+          📄 Show Raw JSON
+        </button>
+        <div style="margin-top: 0.5rem; font-size: 0.7rem; color: #9ca3af;">
+          Check browser console (F12) for full details
+        </div>
+      `;
+    }
+
+    // Show raw JSON response
+    function showRawJSON(data) {
+      let rawPanel = document.getElementById("rawJsonPanel");
+      if (!rawPanel) {
+        rawPanel = document.createElement("div");
+        rawPanel.id = "rawJsonPanel";
+        rawPanel.style.cssText = `
+          position: fixed;
+          top: 50%;
+          left: 50%;
+          transform: translate(-50%, -50%);
+          background: #1a1f36;
+          color: #fff;
+          padding: 1.5rem;
+          border-radius: 8px;
+          font-family: 'JetBrains Mono', monospace;
+          font-size: 0.75rem;
+          max-width: 90%;
+          max-height: 80vh;
+          overflow: auto;
+          box-shadow: 0 20px 25px rgba(0,0,0,0.5);
+          z-index: 10000;
+          display: none;
+        `;
+        document.body.appendChild(rawPanel);
+      }
+      
+      const jsonString = JSON.stringify(data, null, 2);
+      rawPanel.innerHTML = `
+        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem; position: sticky; top: 0; background: #1a1f36; padding-bottom: 0.5rem;">
+          <strong style="color: #10b981; font-size: 1rem;">📄 Raw API Response</strong>
+          <button onclick="document.getElementById('rawJsonPanel').style.display='none'" style="background: none; border: none; color: #fff; cursor: pointer; font-size: 1.5rem;">×</button>
+        </div>
+        <div style="background: #0f1419; padding: 1rem; border-radius: 4px; overflow-x: auto;">
+          <pre style="margin: 0; white-space: pre-wrap; word-wrap: break-word;">${jsonString}</pre>
+        </div>
+        <button onclick="navigator.clipboard.writeText(\`${jsonString.replace(/`/g, '\\`')}\`); alert('Copied to clipboard!')" style="margin-top: 1rem; background: #10b981; color: white; border: none; padding: 0.75rem; border-radius: 4px; cursor: pointer; width: 100%;">
+          📋 Copy JSON to Clipboard
+        </button>
+      `;
+    }
+
+    // Render employees in table
     function renderEmployees(data) {
       const tbody = document.getElementById("employeeTableBody");
       tbody.innerHTML = "";
 
-      data.forEach((emp, index) => {
-        const statusClass = emp.employment_status === "Regular" ? "badge-success" : 
-                           emp.employment_status === "Active" ? "badge-primary" : "badge-warning";
-        
+      data.forEach((employee, index) => {
         const row = document.createElement("tr");
         row.innerHTML = `
-          <td><div class="employee-name">${emp.first_name} ${emp.last_name}</div></td>
-          <td>${emp.role_id || "-"}</td>
-          <td>${emp.company || "-"}</td>
-          <td><span class="badge ${statusClass}">${emp.employment_status || "N/A"}</span></td>
-          <td>₱${parseFloat(emp.basic_salary || 0).toLocaleString('en-PH', {minimumFractionDigits: 2})}</td>
-          <td>₱${parseFloat(emp.sss_employee || 0).toLocaleString('en-PH', {minimumFractionDigits: 2})}</td>
-          <td>₱${parseFloat(emp.philhealth_employee || 0).toLocaleString('en-PH', {minimumFractionDigits: 2})}</td>
-          <td>₱${parseFloat(emp.pagibig_employee || 0).toLocaleString('en-PH', {minimumFractionDigits: 2})}</td>
-          <td>₱${parseFloat(emp.withholding_tax || 0).toLocaleString('en-PH', {minimumFractionDigits: 2})}</td>
-          <td>${emp.bank_account || "-"}</td>
+          <td>
+            <div class="employee-name">${employee.first_name} ${employee.last_name}</div>
+          </td>
+          <td>${employee.role_id || "-"}</td>
+          <td>${employee.company || "-"}</td>
+          <td>
+            <span class="status-badge status-${employee.employment_status?.toLowerCase() || 'active'}">
+              ${employee.employment_status || "N/A"}
+            </span>
+          </td>
+          <td>₱${parseFloat(employee.basic_salary || 0).toLocaleString('en-PH', {minimumFractionDigits: 2})}</td>
+          <td>₱${parseFloat(employee.sss_employee || 0).toLocaleString('en-PH', {minimumFractionDigits: 2})}</td>
+          <td>₱${parseFloat(employee.philhealth_employee || 0).toLocaleString('en-PH', {minimumFractionDigits: 2})}</td>
+          <td>₱${parseFloat(employee.pagibig_employee || 0).toLocaleString('en-PH', {minimumFractionDigits: 2})}</td>
+          <td>₱${parseFloat(employee.withholding_tax || 0).toLocaleString('en-PH', {minimumFractionDigits: 2})}</td>
+          <td>${employee.bank_account || "-"}</td>
           <td>
             <div class="actions">
-              <button class="btn-icon" onclick="editEmployee(${index})" title="Edit">✏️</button>
-              <button class="btn-icon delete" onclick="deleteEmployee(${index})" title="Delete">🗑️</button>
+              <button class="icon-btn" onclick="editEmployee(${index})" title="Edit">✏️</button>
+              <button class="icon-btn delete" onclick="deleteEmployee(${index})" title="Delete">🗑️</button>
             </div>
           </td>
         `;
@@ -711,18 +948,21 @@
       });
     }
 
-    // Update stats
+    // Update statistics
     function updateStats() {
       document.getElementById("totalEmployees").textContent = employees.length;
-      document.getElementById("activeEmployees").textContent = 
-        employees.filter(e => e.employment_status === "Active").length;
-      document.getElementById("regularEmployees").textContent = 
-        employees.filter(e => e.employment_status === "Regular").length;
-      document.getElementById("uniqueCompanies").textContent = 
-        [...new Set(employees.map(e => e.company))].length;
+      
+      const activeCount = employees.filter(e => e.employment_status === "Active").length;
+      document.getElementById("activeEmployees").textContent = activeCount;
+      
+      const regularCount = employees.filter(e => e.employment_status === "Regular").length;
+      document.getElementById("regularEmployees").textContent = regularCount;
+      
+      const companies = [...new Set(employees.map(e => e.company))];
+      document.getElementById("uniqueCompanies").textContent = companies.length;
     }
 
-    // Search
+    // Search functionality
     function setupSearch() {
       const searchInput = document.getElementById("searchInput");
       searchInput.addEventListener("input", (e) => {
@@ -741,29 +981,29 @@
     function openAddModal() {
       editingEmployeeId = null;
       document.getElementById("modalTitle").textContent = "Add Employee";
-      document.getElementById("submitBtn").textContent = "Save Employee";
+      document.getElementById("submitBtn").textContent = "Add Employee";
       document.getElementById("employeeForm").reset();
       document.getElementById("employeeModal").classList.add("active");
     }
 
     function editEmployee(index) {
       editingEmployeeId = index;
-      const emp = employees[index];
+      const employee = employees[index];
       
       document.getElementById("modalTitle").textContent = "Edit Employee";
       document.getElementById("submitBtn").textContent = "Update Employee";
       
-      document.getElementById("firstName").value = emp.first_name || "";
-      document.getElementById("lastName").value = emp.last_name || "";
-      document.getElementById("roleId").value = emp.role_id || "";
-      document.getElementById("company").value = emp.company || "";
-      document.getElementById("employmentStatus").value = emp.employment_status || "";
-      document.getElementById("basicSalary").value = emp.basic_salary || "";
-      document.getElementById("sssEmployee").value = emp.sss_employee || "";
-      document.getElementById("philhealthEmployee").value = emp.philhealth_employee || "";
-      document.getElementById("pagibigEmployee").value = emp.pagibig_employee || "";
-      document.getElementById("withholdingTax").value = emp.withholding_tax || "";
-      document.getElementById("bankAccount").value = emp.bank_account || "";
+      document.getElementById("firstName").value = employee.first_name || "";
+      document.getElementById("lastName").value = employee.last_name || "";
+      document.getElementById("roleId").value = employee.role_id || "";
+      document.getElementById("company").value = employee.company || "";
+      document.getElementById("employmentStatus").value = employee.employment_status || "";
+      document.getElementById("basicSalary").value = employee.basic_salary || "";
+      document.getElementById("sssEmployee").value = employee.sss_employee || "";
+      document.getElementById("philhealthEmployee").value = employee.philhealth_employee || "";
+      document.getElementById("pagibigEmployee").value = employee.pagibig_employee || "";
+      document.getElementById("withholdingTax").value = employee.withholding_tax || "";
+      document.getElementById("bankAccount").value = employee.bank_account || "";
       
       document.getElementById("employeeModal").classList.add("active");
     }
@@ -773,7 +1013,7 @@
       editingEmployeeId = null;
     }
 
-    // Save employee
+    // Save employee (add or update)
     async function saveEmployee(event) {
       event.preventDefault();
       
@@ -799,12 +1039,14 @@
 
         let response;
         if (editingEmployeeId !== null) {
+          // Update existing employee
           response = await fetch(`${API_BASE}/PUT/pe-db/employees/${employees[editingEmployeeId].id}`, {
             method: "PUT",
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify(employeeData)
           });
         } else {
+          // Add new employee
           response = await fetch(`${API_BASE}/POST/pe-db/employees`, {
             method: "POST",
             headers: { "Content-Type": "application/json" },
@@ -816,24 +1058,29 @@
 
         closeModal();
         await loadEmployees();
-        showToast(editingEmployeeId !== null ? "Employee updated successfully" : "Employee added successfully", "success");
+        showToast(
+          editingEmployeeId !== null ? "Employee updated successfully" : "Employee added successfully",
+          "success"
+        );
       } catch (error) {
         console.error("Error saving employee:", error);
-        showToast("Failed to save employee", "error");
+        showToast("Failed to save employee: " + error.message, "error");
       } finally {
         const submitBtn = document.getElementById("submitBtn");
         submitBtn.disabled = false;
-        submitBtn.textContent = editingEmployeeId !== null ? "Update Employee" : "Save Employee";
+        submitBtn.textContent = editingEmployeeId !== null ? "Update Employee" : "Add Employee";
       }
     }
 
     // Delete employee
     async function deleteEmployee(index) {
-      const emp = employees[index];
-      if (!confirm(`Delete ${emp.first_name} ${emp.last_name}?`)) return;
+      const employee = employees[index];
+      if (!confirm(`Are you sure you want to delete ${employee.first_name} ${employee.last_name}?`)) {
+        return;
+      }
 
       try {
-        const response = await fetch(`${API_BASE}/DELETE/pe-db/employees/${emp.id}`, {
+        const response = await fetch(`${API_BASE}/DELETE/pe-db/employees/${employee.id}`, {
           method: "DELETE"
         });
 
@@ -843,22 +1090,32 @@
         showToast("Employee deleted successfully", "success");
       } catch (error) {
         console.error("Error deleting employee:", error);
-        showToast("Failed to delete employee", "error");
+        showToast("Failed to delete employee: " + error.message, "error");
       }
     }
 
-    // Toast notification
+    // Toast notifications
     function showToast(message, type = "success") {
       const toast = document.createElement("div");
       toast.className = `toast ${type}`;
-      toast.innerHTML = `<span>${type === "success" ? "✓" : "✕"}</span><div>${message}</div>`;
+      toast.innerHTML = `
+        <span>${type === "success" ? "✓" : "✕"}</span>
+        <div class="toast-message">${message}</div>
+      `;
+      
       document.body.appendChild(toast);
-      setTimeout(() => toast.remove(), 3000);
+      
+      setTimeout(() => {
+        toast.style.animation = "slideIn 0.3s ease-out reverse";
+        setTimeout(() => toast.remove(), 300);
+      }, 3000);
     }
 
     // Close modal on outside click
     document.getElementById("employeeModal").addEventListener("click", (e) => {
-      if (e.target.id === "employeeModal") closeModal();
+      if (e.target.id === "employeeModal") {
+        closeModal();
+      }
     });
   </script>
 </body>
