@@ -3,51 +3,40 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Employee Dashboard</title>
-  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;700&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+  <title>Employee Management</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
   <style>
-    :root {
-      --color-bg: #fafbfc;
-      --color-surface: #ffffff;
-      --color-border: #e1e4e8;
-      --color-text: #1a1f36;
-      --color-text-secondary: #697386;
-      --color-primary: #2563eb;
-      --color-primary-hover: #1d4ed8;
-      --color-success: #059669;
-      --color-danger: #dc2626;
-      --color-warning: #f59e0b;
-      --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.04);
-      --shadow-md: 0 4px 6px rgba(0, 0, 0, 0.07);
-      --shadow-lg: 0 10px 15px rgba(0, 0, 0, 0.1);
-      --radius: 8px;
-      --transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
-    }
-
     * {
       margin: 0;
       padding: 0;
       box-sizing: border-box;
     }
 
+    :root {
+      --primary: #1e40af;
+      --primary-dark: #1e3a8a;
+      --surface: #ffffff;
+      --background: #f8fafc;
+      --text: #0f172a;
+      --text-light: #64748b;
+      --border: #e2e8f0;
+      --success: #10b981;
+      --danger: #ef4444;
+      --shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1);
+    }
+
     body {
-      font-family: 'DM Sans', -apple-system, BlinkMacSystemFont, sans-serif;
-      background: var(--color-bg);
-      color: var(--color-text);
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+      background: var(--background);
+      color: var(--text);
       line-height: 1.6;
-      padding: 2rem;
-      min-height: 100vh;
+      -webkit-font-smoothing: antialiased;
     }
 
     .container {
       max-width: 1400px;
       margin: 0 auto;
-      animation: fadeIn 0.5s ease-out;
-    }
-
-    @keyframes fadeIn {
-      from { opacity: 0; transform: translateY(10px); }
-      to { opacity: 1; transform: translateY(0); }
+      padding: 2rem;
     }
 
     /* Header */
@@ -56,219 +45,143 @@
       justify-content: space-between;
       align-items: center;
       margin-bottom: 2rem;
-      padding-bottom: 1.5rem;
-      border-bottom: 2px solid var(--color-border);
+      padding-bottom: 1rem;
+      border-bottom: 1px solid var(--border);
     }
 
-    .header h1 {
-      font-size: 2rem;
-      font-weight: 700;
-      color: var(--color-text);
-      letter-spacing: -0.02em;
+    h1 {
+      font-size: 1.5rem;
+      font-weight: 600;
+      color: var(--text);
     }
 
-    .header-actions {
+    /* Toolbar */
+    .toolbar {
       display: flex;
       gap: 1rem;
+      margin-bottom: 1.5rem;
       align-items: center;
+      flex-wrap: wrap;
     }
 
-    /* Search */
-    .search-box {
-      position: relative;
-      width: 300px;
-    }
-
-    .search-box input {
-      width: 100%;
-      padding: 0.75rem 1rem 0.75rem 2.5rem;
-      border: 1px solid var(--color-border);
-      border-radius: var(--radius);
+    .search-input {
+      flex: 1;
+      min-width: 250px;
+      padding: 0.625rem 1rem;
+      border: 1px solid var(--border);
+      border-radius: 6px;
       font-size: 0.875rem;
       font-family: inherit;
-      transition: var(--transition);
-      background: var(--color-surface);
+      background: var(--surface);
+      transition: all 0.2s;
     }
 
-    .search-box input:focus {
+    .search-input:focus {
       outline: none;
-      border-color: var(--color-primary);
-      box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1);
-    }
-
-    .search-icon {
-      position: absolute;
-      left: 0.75rem;
-      top: 50%;
-      transform: translateY(-50%);
-      color: var(--color-text-secondary);
-      pointer-events: none;
+      border-color: var(--primary);
+      box-shadow: 0 0 0 3px rgba(30, 64, 175, 0.1);
     }
 
     /* Buttons */
     .btn {
-      padding: 0.75rem 1.5rem;
+      padding: 0.625rem 1.25rem;
       border: none;
-      border-radius: var(--radius);
+      border-radius: 6px;
       font-size: 0.875rem;
       font-weight: 500;
       font-family: inherit;
       cursor: pointer;
-      transition: var(--transition);
-      display: inline-flex;
-      align-items: center;
-      gap: 0.5rem;
+      transition: all 0.2s;
       white-space: nowrap;
     }
 
     .btn-primary {
-      background: var(--color-primary);
+      background: var(--primary);
       color: white;
-      box-shadow: var(--shadow-sm);
     }
 
     .btn-primary:hover {
-      background: var(--color-primary-hover);
-      box-shadow: var(--shadow-md);
-      transform: translateY(-1px);
+      background: var(--primary-dark);
     }
 
     .btn-secondary {
-      background: var(--color-surface);
-      color: var(--color-text);
-      border: 1px solid var(--color-border);
+      background: var(--surface);
+      color: var(--text);
+      border: 1px solid var(--border);
     }
 
     .btn-secondary:hover {
-      background: var(--color-bg);
-      border-color: var(--color-text-secondary);
+      background: var(--background);
     }
 
-    .btn-small {
-      padding: 0.4rem 0.8rem;
-      font-size: 0.8rem;
+    .btn-sm {
+      padding: 0.375rem 0.75rem;
+      font-size: 0.813rem;
     }
 
     .btn-danger {
-      background: var(--color-danger);
+      background: var(--danger);
       color: white;
     }
 
     .btn-danger:hover {
-      background: #b91c1c;
+      background: #dc2626;
     }
 
-    .btn-success {
-      background: var(--color-success);
-      color: white;
-    }
-
-    .btn-success:hover {
-      background: #047857;
-    }
-
-    /* Stats Bar */
-    .stats-bar {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-      gap: 1rem;
-      margin-bottom: 2rem;
-    }
-
-    .stat-card {
-      background: var(--color-surface);
-      padding: 1.5rem;
-      border-radius: var(--radius);
-      border: 1px solid var(--color-border);
-      box-shadow: var(--shadow-sm);
-      transition: var(--transition);
-    }
-
-    .stat-card:hover {
-      box-shadow: var(--shadow-md);
-      transform: translateY(-2px);
-    }
-
-    .stat-label {
-      font-size: 0.75rem;
-      text-transform: uppercase;
-      letter-spacing: 0.05em;
-      color: var(--color-text-secondary);
-      font-weight: 600;
-      margin-bottom: 0.5rem;
-    }
-
-    .stat-value {
-      font-size: 1.75rem;
-      font-weight: 700;
-      color: var(--color-text);
-      font-family: 'JetBrains Mono', monospace;
-    }
-
-    /* Table Container */
-    .table-container {
-      background: var(--color-surface);
-      border-radius: var(--radius);
-      box-shadow: var(--shadow-md);
-      overflow: hidden;
-      border: 1px solid var(--color-border);
-    }
-
+    /* Table */
     .table-wrapper {
-      overflow-x: auto;
+      background: var(--surface);
+      border-radius: 8px;
+      border: 1px solid var(--border);
+      overflow: hidden;
+      box-shadow: var(--shadow);
     }
 
     table {
       width: 100%;
       border-collapse: collapse;
-      font-size: 0.875rem;
     }
 
     thead {
-      background: var(--color-bg);
-      position: sticky;
-      top: 0;
-      z-index: 10;
+      background: var(--background);
+      border-bottom: 1px solid var(--border);
     }
 
     th {
       text-align: left;
-      padding: 1rem;
+      padding: 0.875rem 1rem;
       font-weight: 600;
-      color: var(--color-text-secondary);
+      font-size: 0.813rem;
+      color: var(--text-light);
       text-transform: uppercase;
-      font-size: 0.75rem;
       letter-spacing: 0.05em;
-      border-bottom: 2px solid var(--color-border);
-      white-space: nowrap;
-    }
-
-    tbody tr {
-      border-bottom: 1px solid var(--color-border);
-      transition: var(--transition);
-    }
-
-    tbody tr:hover {
-      background: var(--color-bg);
     }
 
     td {
-      padding: 1rem;
-      color: var(--color-text);
+      padding: 0.875rem 1rem;
+      font-size: 0.875rem;
+      border-top: 1px solid var(--border);
+    }
+
+    tbody tr {
+      transition: background 0.15s;
+    }
+
+    tbody tr:hover {
+      background: var(--background);
     }
 
     .employee-name {
-      font-weight: 600;
-      color: var(--color-text);
+      font-weight: 500;
+      color: var(--text);
     }
 
     .status-badge {
       display: inline-block;
-      padding: 0.25rem 0.75rem;
-      border-radius: 9999px;
+      padding: 0.25rem 0.625rem;
+      border-radius: 4px;
       font-size: 0.75rem;
       font-weight: 500;
-      text-transform: capitalize;
     }
 
     .status-regular {
@@ -291,43 +204,16 @@
       gap: 0.5rem;
     }
 
-    .icon-btn {
-      background: none;
-      border: none;
-      cursor: pointer;
-      padding: 0.4rem;
-      border-radius: 4px;
-      transition: var(--transition);
-      color: var(--color-text-secondary);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-    }
-
-    .icon-btn:hover {
-      background: var(--color-bg);
-      color: var(--color-text);
-    }
-
-    .icon-btn.delete:hover {
-      background: #fee;
-      color: var(--color-danger);
-    }
-
     /* Modal */
     .modal-overlay {
       display: none;
       position: fixed;
-      top: 0;
-      left: 0;
-      right: 0;
-      bottom: 0;
-      background: rgba(0, 0, 0, 0.5);
-      backdrop-filter: blur(4px);
+      inset: 0;
+      background: rgba(0, 0, 0, 0.4);
+      backdrop-filter: blur(2px);
       z-index: 1000;
       align-items: center;
       justify-content: center;
-      animation: fadeIn 0.2s ease-out;
     }
 
     .modal-overlay.active {
@@ -335,31 +221,25 @@
     }
 
     .modal {
-      background: var(--color-surface);
-      border-radius: var(--radius);
-      box-shadow: var(--shadow-lg);
+      background: var(--surface);
+      border-radius: 8px;
       max-width: 600px;
       width: 90%;
       max-height: 90vh;
       overflow-y: auto;
-      animation: slideUp 0.3s ease-out;
-    }
-
-    @keyframes slideUp {
-      from { opacity: 0; transform: translateY(20px); }
-      to { opacity: 1; transform: translateY(0); }
+      box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1);
     }
 
     .modal-header {
       padding: 1.5rem;
-      border-bottom: 1px solid var(--color-border);
+      border-bottom: 1px solid var(--border);
       display: flex;
       justify-content: space-between;
       align-items: center;
     }
 
     .modal-header h2 {
-      font-size: 1.25rem;
+      font-size: 1.125rem;
       font-weight: 600;
     }
 
@@ -368,7 +248,7 @@
       border: none;
       font-size: 1.5rem;
       cursor: pointer;
-      color: var(--color-text-secondary);
+      color: var(--text-light);
       padding: 0;
       width: 2rem;
       height: 2rem;
@@ -376,12 +256,12 @@
       align-items: center;
       justify-content: center;
       border-radius: 4px;
-      transition: var(--transition);
+      transition: all 0.2s;
     }
 
     .modal-close:hover {
-      background: var(--color-bg);
-      color: var(--color-text);
+      background: var(--background);
+      color: var(--text);
     }
 
     .modal-body {
@@ -389,34 +269,34 @@
     }
 
     .form-group {
-      margin-bottom: 1.5rem;
+      margin-bottom: 1.25rem;
     }
 
     .form-group label {
       display: block;
       font-weight: 500;
       margin-bottom: 0.5rem;
-      color: var(--color-text);
+      color: var(--text);
       font-size: 0.875rem;
     }
 
     .form-group input,
     .form-group select {
       width: 100%;
-      padding: 0.75rem;
-      border: 1px solid var(--color-border);
-      border-radius: var(--radius);
+      padding: 0.625rem 0.875rem;
+      border: 1px solid var(--border);
+      border-radius: 6px;
       font-size: 0.875rem;
       font-family: inherit;
-      transition: var(--transition);
-      background: var(--color-surface);
+      background: var(--surface);
+      transition: all 0.2s;
     }
 
     .form-group input:focus,
     .form-group select:focus {
       outline: none;
-      border-color: var(--color-primary);
-      box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1);
+      border-color: var(--primary);
+      box-shadow: 0 0 0 3px rgba(30, 64, 175, 0.1);
     }
 
     .form-row {
@@ -427,26 +307,27 @@
 
     .modal-footer {
       padding: 1.5rem;
-      border-top: 1px solid var(--color-border);
+      border-top: 1px solid var(--border);
       display: flex;
       justify-content: flex-end;
-      gap: 1rem;
+      gap: 0.75rem;
+      background: var(--background);
     }
 
-    /* Loading State */
+    /* Loading */
     .loading {
       text-align: center;
       padding: 3rem;
-      color: var(--color-text-secondary);
+      color: var(--text-light);
     }
 
     .spinner {
-      border: 3px solid var(--color-border);
-      border-top: 3px solid var(--color-primary);
+      border: 2px solid var(--border);
+      border-top: 2px solid var(--primary);
       border-radius: 50%;
-      width: 40px;
-      height: 40px;
-      animation: spin 1s linear infinite;
+      width: 32px;
+      height: 32px;
+      animation: spin 0.8s linear infinite;
       margin: 0 auto 1rem;
     }
 
@@ -458,43 +339,57 @@
     /* Empty State */
     .empty-state {
       text-align: center;
-      padding: 4rem 2rem;
-      color: var(--color-text-secondary);
+      padding: 3rem 2rem;
+      color: var(--text-light);
     }
 
-    .empty-state svg {
-      width: 80px;
-      height: 80px;
-      margin-bottom: 1rem;
-      opacity: 0.5;
+    /* Toast */
+    .toast {
+      position: fixed;
+      bottom: 2rem;
+      right: 2rem;
+      background: var(--surface);
+      padding: 1rem 1.25rem;
+      border-radius: 6px;
+      box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+      border: 1px solid var(--border);
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      z-index: 2000;
+      font-size: 0.875rem;
+    }
+
+    .toast.success {
+      border-left: 3px solid var(--success);
+    }
+
+    .toast.error {
+      border-left: 3px solid var(--danger);
     }
 
     /* Responsive */
     @media (max-width: 768px) {
-      body {
+      .container {
         padding: 1rem;
       }
 
       .header {
         flex-direction: column;
-        gap: 1rem;
         align-items: flex-start;
+        gap: 1rem;
       }
 
-      .header-actions {
-        width: 100%;
+      .toolbar {
         flex-direction: column;
+        width: 100%;
       }
 
-      .search-box {
+      .search-input {
         width: 100%;
       }
 
       .form-row {
-        grid-template-columns: 1fr;
-      }
-
-      .stats-bar {
         grid-template-columns: 1fr;
       }
 
@@ -503,44 +398,8 @@
       }
 
       th, td {
-        padding: 0.75rem 0.5rem;
+        padding: 0.625rem 0.5rem;
       }
-    }
-
-    /* Toast Notifications */
-    .toast {
-      position: fixed;
-      bottom: 2rem;
-      right: 2rem;
-      background: var(--color-surface);
-      padding: 1rem 1.5rem;
-      border-radius: var(--radius);
-      box-shadow: var(--shadow-lg);
-      border: 1px solid var(--color-border);
-      display: flex;
-      align-items: center;
-      gap: 0.75rem;
-      animation: slideIn 0.3s ease-out;
-      z-index: 2000;
-      max-width: 400px;
-    }
-
-    @keyframes slideIn {
-      from { transform: translateX(400px); opacity: 0; }
-      to { transform: translateX(0); opacity: 1; }
-    }
-
-    .toast.success {
-      border-left: 4px solid var(--color-success);
-    }
-
-    .toast.error {
-      border-left: 4px solid var(--color-danger);
-    }
-
-    .toast-message {
-      flex: 1;
-      font-size: 0.875rem;
     }
   </style>
 </head>
@@ -548,53 +407,36 @@
   <div class="container">
     <!-- Header -->
     <div class="header">
-      <h1>Employee Dashboard</h1>
-      <div class="header-actions">
-        <div class="search-box">
-          <span class="search-icon">🔍</span>
-          <input type="text" id="searchInput" placeholder="Search employees..." />
-        </div>
-        <button class="btn btn-primary" onclick="openAddModal()">
-          ➕ Add Employee
-        </button>
-      </div>
+      <h1>Employee Management</h1>
+      <button class="btn btn-primary" onclick="openAddModal()">+ Add Employee</button>
     </div>
 
-    <!-- Stats Bar -->
-    <div class="stats-bar">
-      <div class="stat-card">
-        <div class="stat-label">Total Employees</div>
-        <div class="stat-value" id="totalEmployees">-</div>
-      </div>
-      <div class="stat-card">
-        <div class="stat-label">Active Status</div>
-        <div class="stat-value" id="activeEmployees">-</div>
-      </div>
-      <div class="stat-card">
-        <div class="stat-label">Regular Status</div>
-        <div class="stat-value" id="regularEmployees">-</div>
-      </div>
-      <div class="stat-card">
-        <div class="stat-label">Companies</div>
-        <div class="stat-value" id="uniqueCompanies">-</div>
-      </div>
+    <!-- Toolbar -->
+    <div class="toolbar">
+      <input 
+        type="text" 
+        id="searchInput" 
+        class="search-input" 
+        placeholder="Search employees..."
+      />
     </div>
 
     <!-- Table -->
-    <div class="table-container">
+    <div class="table-wrapper">
       <div id="loadingState" class="loading">
         <div class="spinner"></div>
         <p>Loading employees...</p>
       </div>
-      <div id="tableWrapper" class="table-wrapper" style="display: none;">
-        <table id="employeeTable">
+      
+      <div id="tableContent" style="display: none;">
+        <table>
           <thead>
             <tr>
               <th>Name</th>
               <th>Role ID</th>
               <th>Company</th>
               <th>Status</th>
-              <th>Basic Salary</th>
+              <th>Salary</th>
               <th>SSS</th>
               <th>PhilHealth</th>
               <th>Pag-IBIG</th>
@@ -603,24 +445,17 @@
               <th>Actions</th>
             </tr>
           </thead>
-          <tbody id="employeeTableBody">
-          </tbody>
+          <tbody id="employeeTableBody"></tbody>
         </table>
       </div>
+
       <div id="emptyState" class="empty-state" style="display: none;">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-          <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path>
-          <circle cx="9" cy="7" r="4"></circle>
-          <path d="M23 21v-2a4 4 0 0 0-3-3.87"></path>
-          <path d="M16 3.13a4 4 0 0 1 0 7.75"></path>
-        </svg>
-        <h3>No employees found</h3>
-        <p>Start by adding your first employee</p>
+        <p>No employees found</p>
       </div>
     </div>
   </div>
 
-  <!-- Add/Edit Modal -->
+  <!-- Modal -->
   <div class="modal-overlay" id="employeeModal">
     <div class="modal">
       <div class="modal-header">
@@ -631,29 +466,29 @@
         <div class="modal-body">
           <div class="form-row">
             <div class="form-group">
-              <label for="firstName">First Name *</label>
-              <input type="text" id="firstName" name="firstName" required />
+              <label>First Name *</label>
+              <input type="text" id="firstName" required />
             </div>
             <div class="form-group">
-              <label for="lastName">Last Name *</label>
-              <input type="text" id="lastName" name="lastName" required />
+              <label>Last Name *</label>
+              <input type="text" id="lastName" required />
             </div>
           </div>
 
           <div class="form-row">
             <div class="form-group">
-              <label for="roleId">Role ID *</label>
-              <input type="number" id="roleId" name="roleId" required />
+              <label>Role ID *</label>
+              <input type="number" id="roleId" required />
             </div>
             <div class="form-group">
-              <label for="company">Company *</label>
-              <input type="text" id="company" name="company" required />
+              <label>Company *</label>
+              <input type="text" id="company" required />
             </div>
           </div>
 
           <div class="form-group">
-            <label for="employmentStatus">Employment Status *</label>
-            <select id="employmentStatus" name="employmentStatus" required>
+            <label>Employment Status *</label>
+            <select id="employmentStatus" required>
               <option value="">Select status</option>
               <option value="Active">Active</option>
               <option value="Regular">Regular</option>
@@ -664,283 +499,113 @@
           </div>
 
           <div class="form-group">
-            <label for="basicSalary">Basic Salary *</label>
-            <input type="number" step="0.01" id="basicSalary" name="basicSalary" required />
+            <label>Basic Salary *</label>
+            <input type="number" step="0.01" id="basicSalary" required />
           </div>
 
           <div class="form-row">
             <div class="form-group">
-              <label for="sssEmployee">SSS (Employee) *</label>
-              <input type="number" step="0.01" id="sssEmployee" name="sssEmployee" required />
+              <label>SSS (Employee) *</label>
+              <input type="number" step="0.01" id="sssEmployee" required />
             </div>
             <div class="form-group">
-              <label for="philhealthEmployee">PhilHealth (Employee) *</label>
-              <input type="number" step="0.01" id="philhealthEmployee" name="philhealthEmployee" required />
+              <label>PhilHealth (Employee) *</label>
+              <input type="number" step="0.01" id="philhealthEmployee" required />
             </div>
           </div>
 
           <div class="form-row">
             <div class="form-group">
-              <label for="pagibigEmployee">Pag-IBIG (Employee) *</label>
-              <input type="number" step="0.01" id="pagibigEmployee" name="pagibigEmployee" required />
+              <label>Pag-IBIG (Employee) *</label>
+              <input type="number" step="0.01" id="pagibigEmployee" required />
             </div>
             <div class="form-group">
-              <label for="withholdingTax">Withholding Tax *</label>
-              <input type="number" step="0.01" id="withholdingTax" name="withholdingTax" required />
+              <label>Withholding Tax *</label>
+              <input type="number" step="0.01" id="withholdingTax" required />
             </div>
           </div>
 
           <div class="form-group">
-            <label for="bankAccount">Bank Account</label>
-            <input type="text" id="bankAccount" name="bankAccount" placeholder="Optional" />
+            <label>Bank Account</label>
+            <input type="text" id="bankAccount" placeholder="Optional" />
           </div>
         </div>
         <div class="modal-footer">
           <button type="button" class="btn btn-secondary" onclick="closeModal()">Cancel</button>
-          <button type="submit" class="btn btn-primary" id="submitBtn">Save Employee</button>
+          <button type="submit" class="btn btn-primary" id="submitBtn">Save</button>
         </div>
       </form>
     </div>
   </div>
 
   <script>
-    // IMMEDIATE CONSOLE TEST
-    console.log("========================================");
-    console.log("🚀 SCRIPT LOADED - Console is working!");
-    console.log("========================================");
-
-    // Global variables
     let employees = [];
     let editingEmployeeId = null;
     const API_BASE = "https://primary-production-a810.up.railway.app/webhook";
 
-    console.log("API Base URL:", API_BASE);
-
     // Initialize
     window.addEventListener("load", () => {
-      console.log("✅ Page loaded, starting initialization...");
       loadEmployees();
       setupSearch();
     });
 
-    // Load employees from API
+    // Load employees
     async function loadEmployees() {
-      console.log("📡 Starting loadEmployees function...");
-      
       const loadingState = document.getElementById("loadingState");
-      const tableWrapper = document.getElementById("tableWrapper");
+      const tableContent = document.getElementById("tableContent");
       const emptyState = document.getElementById("emptyState");
-      
-      const fetchUrl = `${API_BASE}/GET/pe-db/employees`;
-      console.log("🔗 Fetching from:", fetchUrl);
 
       try {
-        console.log("⏳ Making fetch request...");
-        const response = await fetch(fetchUrl, {
-          method: "GET"
-        });
+        const response = await fetch(`${API_BASE}/GET/pe-db/employees`);
+        if (!response.ok) throw new Error("Failed to fetch");
 
-        console.log("📥 Response received!");
-        console.log("Response status:", response.status);
-        console.log("Response OK?", response.ok);
-
-        if (!response.ok) {
-          throw new Error(`HTTP ${response.status}: Failed to fetch employees`);
-        }
-
-        console.log("🔄 Parsing JSON...");
-        const rawData = await response.json();
-        
-        // DEBUG: Log the raw response
-        console.log("=== DEBUG INFO ===");
-        console.log("Raw response:", rawData);
-        console.log("Raw response (stringified):", JSON.stringify(rawData, null, 2));
-        console.log("Type of response:", typeof rawData);
-        console.log("Is Array?", Array.isArray(rawData));
-        
-        if (Array.isArray(rawData)) {
-          console.log("✅ Array length:", rawData.length);
-          console.log("First item:", rawData[0]);
-          if (rawData.length > 1) {
-            console.log("Second item:", rawData[1]);
-          }
-          if (rawData.length > 2) {
-            console.log("Third item:", rawData[2]);
-          }
-        } else if (rawData && typeof rawData === 'object') {
-          console.log("📦 Object keys:", Object.keys(rawData));
-          console.log("Full object:", rawData);
-        }
-        
-        // Try to intelligently parse the response
-        let parsedData;
-        if (Array.isArray(rawData)) {
-          // If it's an array, use all items
-          parsedData = rawData;
-          console.log("✅ Using entire array with", parsedData.length, "items");
-        } else if (rawData && typeof rawData === 'object') {
-          // If it's an object, wrap it in an array
-          parsedData = [rawData];
-          console.log("📦 Wrapping single object in array");
-        } else {
-          parsedData = [];
-          console.log("❌ Unknown data format, using empty array");
-        }
-        
-        employees = parsedData;
-        console.log("✅ Final employees array:", employees);
-        console.log("✅ Total employees loaded:", employees.length);
-        console.log("=== END DEBUG ===");
-        
-        // Show debug info on page
-        showDebugInfo(rawData, employees);
-        
-        // Also show raw JSON on page
-        showRawJSON(rawData);
+        const data = await response.json();
+        employees = Array.isArray(data) ? data : [data];
         
         loadingState.style.display = "none";
 
         if (employees.length === 0) {
-          console.warn("⚠️ No employees found, showing empty state");
           emptyState.style.display = "block";
-          tableWrapper.style.display = "none";
         } else {
-          console.log("✅ Rendering", employees.length, "employees");
-          emptyState.style.display = "none";
-          tableWrapper.style.display = "block";
+          tableContent.style.display = "block";
           renderEmployees(employees);
-          updateStats();
         }
       } catch (error) {
-        console.error("❌ ERROR in loadEmployees:", error);
-        console.error("Error details:", error.message);
-        console.error("Error stack:", error.stack);
+        console.error("Error:", error);
         loadingState.innerHTML = `
-          <div style="color: var(--color-danger);">
-            <p>❌ Failed to load employees</p>
-            <p style="font-size: 0.875rem; margin-top: 0.5rem;">${error.message}</p>
-            <button class="btn btn-primary" onclick="loadEmployees()" style="margin-top: 1rem;">Retry</button>
-          </div>
+          <p style="color: var(--danger);">Failed to load employees</p>
+          <button class="btn btn-primary btn-sm" onclick="loadEmployees()" style="margin-top: 1rem;">Retry</button>
         `;
         showToast("Failed to load employees", "error");
       }
     }
 
-    // Show debug information
-    function showDebugInfo(rawData, processedData) {
-      let debugPanel = document.getElementById("debugPanel");
-      if (!debugPanel) {
-        debugPanel = document.createElement("div");
-        debugPanel.id = "debugPanel";
-        debugPanel.style.cssText = `
-          position: fixed;
-          bottom: 1rem;
-          left: 1rem;
-          background: #1a1f36;
-          color: #fff;
-          padding: 1rem;
-          border-radius: 8px;
-          font-family: 'JetBrains Mono', monospace;
-          font-size: 0.75rem;
-          max-width: 400px;
-          box-shadow: 0 10px 15px rgba(0,0,0,0.3);
-          z-index: 9999;
-        `;
-        document.body.appendChild(debugPanel);
-      }
-      
-      debugPanel.innerHTML = `
-        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.5rem;">
-          <strong style="color: #10b981;">🐛 Debug Info</strong>
-          <button onclick="document.getElementById('debugPanel').remove()" style="background: none; border: none; color: #fff; cursor: pointer; font-size: 1.2rem;">×</button>
-        </div>
-        <div style="background: #0f1419; padding: 0.75rem; border-radius: 4px; overflow-x: auto;">
-          <div><strong>Is Array:</strong> ${Array.isArray(rawData)}</div>
-          <div><strong>Raw Length:</strong> ${Array.isArray(rawData) ? rawData.length : 'N/A'}</div>
-          <div><strong>Processed Count:</strong> ${processedData.length}</div>
-          <div style="margin-top: 0.5rem; padding-top: 0.5rem; border-top: 1px solid #374151;">
-            <strong>Raw Response Type:</strong> ${typeof rawData}
-          </div>
-        </div>
-        <button onclick="document.getElementById('rawJsonPanel').style.display='block'" style="margin-top: 0.5rem; background: #10b981; color: white; border: none; padding: 0.5rem; border-radius: 4px; cursor: pointer; width: 100%; font-size: 0.75rem;">
-          📄 Show Raw JSON
-        </button>
-        <div style="margin-top: 0.5rem; font-size: 0.7rem; color: #9ca3af;">
-          Check browser console (F12) for full details
-        </div>
-      `;
-    }
-
-    // Show raw JSON response
-    function showRawJSON(data) {
-      let rawPanel = document.getElementById("rawJsonPanel");
-      if (!rawPanel) {
-        rawPanel = document.createElement("div");
-        rawPanel.id = "rawJsonPanel";
-        rawPanel.style.cssText = `
-          position: fixed;
-          top: 50%;
-          left: 50%;
-          transform: translate(-50%, -50%);
-          background: #1a1f36;
-          color: #fff;
-          padding: 1.5rem;
-          border-radius: 8px;
-          font-family: 'JetBrains Mono', monospace;
-          font-size: 0.75rem;
-          max-width: 90%;
-          max-height: 80vh;
-          overflow: auto;
-          box-shadow: 0 20px 25px rgba(0,0,0,0.5);
-          z-index: 10000;
-          display: none;
-        `;
-        document.body.appendChild(rawPanel);
-      }
-      
-      const jsonString = JSON.stringify(data, null, 2);
-      rawPanel.innerHTML = `
-        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem; position: sticky; top: 0; background: #1a1f36; padding-bottom: 0.5rem;">
-          <strong style="color: #10b981; font-size: 1rem;">📄 Raw API Response</strong>
-          <button onclick="document.getElementById('rawJsonPanel').style.display='none'" style="background: none; border: none; color: #fff; cursor: pointer; font-size: 1.5rem;">×</button>
-        </div>
-        <div style="background: #0f1419; padding: 1rem; border-radius: 4px; overflow-x: auto;">
-          <pre style="margin: 0; white-space: pre-wrap; word-wrap: break-word;">${jsonString}</pre>
-        </div>
-        <button onclick="navigator.clipboard.writeText(\`${jsonString.replace(/`/g, '\\`')}\`); alert('Copied to clipboard!')" style="margin-top: 1rem; background: #10b981; color: white; border: none; padding: 0.75rem; border-radius: 4px; cursor: pointer; width: 100%;">
-          📋 Copy JSON to Clipboard
-        </button>
-      `;
-    }
-
-    // Render employees in table
+    // Render table
     function renderEmployees(data) {
       const tbody = document.getElementById("employeeTableBody");
       tbody.innerHTML = "";
 
-      data.forEach((employee, index) => {
+      data.forEach((emp, index) => {
         const row = document.createElement("tr");
         row.innerHTML = `
+          <td><span class="employee-name">${emp.first_name} ${emp.last_name}</span></td>
+          <td>${emp.role_id || "-"}</td>
+          <td>${emp.company || "-"}</td>
           <td>
-            <div class="employee-name">${employee.first_name} ${employee.last_name}</div>
-          </td>
-          <td>${employee.role_id || "-"}</td>
-          <td>${employee.company || "-"}</td>
-          <td>
-            <span class="status-badge status-${employee.employment_status?.toLowerCase() || 'active'}">
-              ${employee.employment_status || "N/A"}
+            <span class="status-badge status-${emp.employment_status?.toLowerCase() || 'active'}">
+              ${emp.employment_status || "N/A"}
             </span>
           </td>
-          <td>₱${parseFloat(employee.basic_salary || 0).toLocaleString('en-PH', {minimumFractionDigits: 2})}</td>
-          <td>₱${parseFloat(employee.sss_employee || 0).toLocaleString('en-PH', {minimumFractionDigits: 2})}</td>
-          <td>₱${parseFloat(employee.philhealth_employee || 0).toLocaleString('en-PH', {minimumFractionDigits: 2})}</td>
-          <td>₱${parseFloat(employee.pagibig_employee || 0).toLocaleString('en-PH', {minimumFractionDigits: 2})}</td>
-          <td>₱${parseFloat(employee.withholding_tax || 0).toLocaleString('en-PH', {minimumFractionDigits: 2})}</td>
-          <td>${employee.bank_account || "-"}</td>
+          <td>₱${parseFloat(emp.basic_salary || 0).toLocaleString('en-PH', {minimumFractionDigits: 2})}</td>
+          <td>₱${parseFloat(emp.sss_employee || 0).toLocaleString('en-PH')}</td>
+          <td>₱${parseFloat(emp.philhealth_employee || 0).toLocaleString('en-PH')}</td>
+          <td>₱${parseFloat(emp.pagibig_employee || 0).toLocaleString('en-PH')}</td>
+          <td>₱${parseFloat(emp.withholding_tax || 0).toLocaleString('en-PH', {minimumFractionDigits: 2})}</td>
+          <td>${emp.bank_account || "-"}</td>
           <td>
             <div class="actions">
-              <button class="icon-btn" onclick="editEmployee(${index})" title="Edit">✏️</button>
-              <button class="icon-btn delete" onclick="deleteEmployee(${index})" title="Delete">🗑️</button>
+              <button class="btn btn-secondary btn-sm" onclick="editEmployee(${index})">Edit</button>
+              <button class="btn btn-danger btn-sm" onclick="deleteEmployee(${index})">Delete</button>
             </div>
           </td>
         `;
@@ -948,30 +613,14 @@
       });
     }
 
-    // Update statistics
-    function updateStats() {
-      document.getElementById("totalEmployees").textContent = employees.length;
-      
-      const activeCount = employees.filter(e => e.employment_status === "Active").length;
-      document.getElementById("activeEmployees").textContent = activeCount;
-      
-      const regularCount = employees.filter(e => e.employment_status === "Regular").length;
-      document.getElementById("regularEmployees").textContent = regularCount;
-      
-      const companies = [...new Set(employees.map(e => e.company))];
-      document.getElementById("uniqueCompanies").textContent = companies.length;
-    }
-
-    // Search functionality
+    // Search
     function setupSearch() {
-      const searchInput = document.getElementById("searchInput");
-      searchInput.addEventListener("input", (e) => {
+      document.getElementById("searchInput").addEventListener("input", (e) => {
         const query = e.target.value.toLowerCase();
         const filtered = employees.filter(emp => 
           `${emp.first_name} ${emp.last_name}`.toLowerCase().includes(query) ||
           emp.company?.toLowerCase().includes(query) ||
-          emp.employment_status?.toLowerCase().includes(query) ||
-          emp.role_id?.toString().includes(query)
+          emp.employment_status?.toLowerCase().includes(query)
         );
         renderEmployees(filtered);
       });
@@ -981,29 +630,29 @@
     function openAddModal() {
       editingEmployeeId = null;
       document.getElementById("modalTitle").textContent = "Add Employee";
-      document.getElementById("submitBtn").textContent = "Add Employee";
+      document.getElementById("submitBtn").textContent = "Save";
       document.getElementById("employeeForm").reset();
       document.getElementById("employeeModal").classList.add("active");
     }
 
     function editEmployee(index) {
       editingEmployeeId = index;
-      const employee = employees[index];
+      const emp = employees[index];
       
       document.getElementById("modalTitle").textContent = "Edit Employee";
-      document.getElementById("submitBtn").textContent = "Update Employee";
+      document.getElementById("submitBtn").textContent = "Update";
       
-      document.getElementById("firstName").value = employee.first_name || "";
-      document.getElementById("lastName").value = employee.last_name || "";
-      document.getElementById("roleId").value = employee.role_id || "";
-      document.getElementById("company").value = employee.company || "";
-      document.getElementById("employmentStatus").value = employee.employment_status || "";
-      document.getElementById("basicSalary").value = employee.basic_salary || "";
-      document.getElementById("sssEmployee").value = employee.sss_employee || "";
-      document.getElementById("philhealthEmployee").value = employee.philhealth_employee || "";
-      document.getElementById("pagibigEmployee").value = employee.pagibig_employee || "";
-      document.getElementById("withholdingTax").value = employee.withholding_tax || "";
-      document.getElementById("bankAccount").value = employee.bank_account || "";
+      document.getElementById("firstName").value = emp.first_name || "";
+      document.getElementById("lastName").value = emp.last_name || "";
+      document.getElementById("roleId").value = emp.role_id || "";
+      document.getElementById("company").value = emp.company || "";
+      document.getElementById("employmentStatus").value = emp.employment_status || "";
+      document.getElementById("basicSalary").value = emp.basic_salary || "";
+      document.getElementById("sssEmployee").value = emp.sss_employee || "";
+      document.getElementById("philhealthEmployee").value = emp.philhealth_employee || "";
+      document.getElementById("pagibigEmployee").value = emp.pagibig_employee || "";
+      document.getElementById("withholdingTax").value = emp.withholding_tax || "";
+      document.getElementById("bankAccount").value = emp.bank_account || "";
       
       document.getElementById("employeeModal").classList.add("active");
     }
@@ -1013,23 +662,23 @@
       editingEmployeeId = null;
     }
 
-    // Save employee (add or update)
+    // Save employee
     async function saveEmployee(event) {
       event.preventDefault();
       
       const formData = new FormData(event.target);
-      const employeeData = {
-        first_name: formData.get("firstName"),
-        last_name: formData.get("lastName"),
-        role_id: parseInt(formData.get("roleId")),
-        company: formData.get("company"),
-        employment_status: formData.get("employmentStatus"),
-        basic_salary: parseFloat(formData.get("basicSalary")).toFixed(2),
-        sss_employee: parseFloat(formData.get("sssEmployee")).toFixed(2),
-        philhealth_employee: parseFloat(formData.get("philhealthEmployee")).toFixed(2),
-        pagibig_employee: parseFloat(formData.get("pagibigEmployee")).toFixed(2),
-        withholding_tax: parseFloat(formData.get("withholdingTax")).toFixed(2),
-        bank_account: formData.get("bankAccount") || null
+      const data = {
+        first_name: document.getElementById("firstName").value,
+        last_name: document.getElementById("lastName").value,
+        role_id: parseInt(document.getElementById("roleId").value),
+        company: document.getElementById("company").value,
+        employment_status: document.getElementById("employmentStatus").value,
+        basic_salary: parseFloat(document.getElementById("basicSalary").value).toFixed(2),
+        sss_employee: parseFloat(document.getElementById("sssEmployee").value).toFixed(2),
+        philhealth_employee: parseFloat(document.getElementById("philhealthEmployee").value).toFixed(2),
+        pagibig_employee: parseFloat(document.getElementById("pagibigEmployee").value).toFixed(2),
+        withholding_tax: parseFloat(document.getElementById("withholdingTax").value).toFixed(2),
+        bank_account: document.getElementById("bankAccount").value || null
       };
 
       try {
@@ -1039,83 +688,69 @@
 
         let response;
         if (editingEmployeeId !== null) {
-          // Update existing employee
           response = await fetch(`${API_BASE}/PUT/pe-db/employees/${employees[editingEmployeeId].id}`, {
             method: "PUT",
             headers: { "Content-Type": "application/json" },
-            body: JSON.stringify(employeeData)
+            body: JSON.stringify(data)
           });
         } else {
-          // Add new employee
           response = await fetch(`${API_BASE}/POST/pe-db/employees`, {
             method: "POST",
             headers: { "Content-Type": "application/json" },
-            body: JSON.stringify(employeeData)
+            body: JSON.stringify(data)
           });
         }
 
-        if (!response.ok) throw new Error("Failed to save employee");
+        if (!response.ok) throw new Error("Failed to save");
 
         closeModal();
         await loadEmployees();
-        showToast(
-          editingEmployeeId !== null ? "Employee updated successfully" : "Employee added successfully",
-          "success"
-        );
+        showToast(editingEmployeeId !== null ? "Employee updated" : "Employee added", "success");
       } catch (error) {
-        console.error("Error saving employee:", error);
-        showToast("Failed to save employee: " + error.message, "error");
+        console.error("Error:", error);
+        showToast("Failed to save employee", "error");
       } finally {
         const submitBtn = document.getElementById("submitBtn");
         submitBtn.disabled = false;
-        submitBtn.textContent = editingEmployeeId !== null ? "Update Employee" : "Add Employee";
+        submitBtn.textContent = editingEmployeeId !== null ? "Update" : "Save";
       }
     }
 
     // Delete employee
     async function deleteEmployee(index) {
-      const employee = employees[index];
-      if (!confirm(`Are you sure you want to delete ${employee.first_name} ${employee.last_name}?`)) {
-        return;
-      }
+      const emp = employees[index];
+      if (!confirm(`Delete ${emp.first_name} ${emp.last_name}?`)) return;
 
       try {
-        const response = await fetch(`${API_BASE}/DELETE/pe-db/employees/${employee.id}`, {
+        const response = await fetch(`${API_BASE}/DELETE/pe-db/employees/${emp.id}`, {
           method: "DELETE"
         });
 
-        if (!response.ok) throw new Error("Failed to delete employee");
+        if (!response.ok) throw new Error("Failed to delete");
 
         await loadEmployees();
-        showToast("Employee deleted successfully", "success");
+        showToast("Employee deleted", "success");
       } catch (error) {
-        console.error("Error deleting employee:", error);
-        showToast("Failed to delete employee: " + error.message, "error");
+        console.error("Error:", error);
+        showToast("Failed to delete employee", "error");
       }
     }
 
-    // Toast notifications
+    // Toast notification
     function showToast(message, type = "success") {
       const toast = document.createElement("div");
       toast.className = `toast ${type}`;
-      toast.innerHTML = `
-        <span>${type === "success" ? "✓" : "✕"}</span>
-        <div class="toast-message">${message}</div>
-      `;
-      
+      toast.textContent = message;
       document.body.appendChild(toast);
       
       setTimeout(() => {
-        toast.style.animation = "slideIn 0.3s ease-out reverse";
-        setTimeout(() => toast.remove(), 300);
+        toast.remove();
       }, 3000);
     }
 
     // Close modal on outside click
     document.getElementById("employeeModal").addEventListener("click", (e) => {
-      if (e.target.id === "employeeModal") {
-        closeModal();
-      }
+      if (e.target.id === "employeeModal") closeModal();
     });
   </script>
 </body>
