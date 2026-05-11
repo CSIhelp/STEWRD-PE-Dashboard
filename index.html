@@ -29,11 +29,16 @@
         if (response.ok) {
           // Display fields from your Postgres row
           outputEl.innerHTML = `
-            <p><strong>Name:</strong> ${data.fn} ${data.mn} ${data.ln}</p>
-            <p><strong>Email:</strong> ${data.email}</p>
-            <p><strong>Status:</strong> ${data.status}</p>
-            <p><strong>Department ID:</strong> ${data.dep_id}</p>
-            <p><strong>Salary:</strong> ${data.salary}</p>
+            <p><strong>Name:</strong> ${data.first_name} ${data.last_name}</p>
+            <p><strong>Role ID:</strong> ${data.role_id}</p>
+            <p><strong>Company:</strong> ${data.company}</p>
+            <p><strong>Employment Status:</strong> ${data.employment_status}</p>
+            <p><strong>Basic Salary:</strong> ${data.basic_salary}</p>
+            <p><strong>SSS (Employee):</strong> ${data.sss_employee}</p>
+            <p><strong>PhilHealth (Employee):</strong> ${data.philhealth_employee}</p>
+            <p><strong>Pag-IBIG (Employee):</strong> ${data.pagibig_employee}</p>
+            <p><strong>Withholding Tax:</strong> ${data.withholding_tax}</p>
+            <p><strong>Bank Account:</strong> ${data.bank_account}</p>
           `;
         } else {
           outputEl.innerHTML = "Something went wrong.";
