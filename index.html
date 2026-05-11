@@ -11,29 +11,30 @@
 
   <script>
     async function triggerN8nWebhook() {
-      const params = new URLSearchParams({
-        event: "page_opened",
-        timestamp: new Date().toISOString(),
-        page: window.location.href
-      });
-
-      const webhookUrl = `https://primary-production-a810.up.railway.app/webhook/GET/pe-db/employees`;
+      const webhookUrl = "https://primary-production-a810.up.railway.app/webhook/GET/pe-db/employees";
       const outputEl = document.getElementById("webhook-output");
 
       try {
         const response = await fetch(webhookUrl, { method: "GET" });
-const data = await response.json();
 
-console.log("Raw response:", data);         // See the full structure
-console.log("Type:", typeof data);           // object? array?
-document.getElementById("webhook-output").innerHTML = JSON.stringify(data, null, 2);
+        // Read the body ONCE
+        const raw = await response.json();
+        console.log("Raw response:", raw);
+        console.log("Type:", typeof raw);
+
+        // Unwrap n8n's array wrapper if needed
+        const data = Array.isArray(raw) ? raw[0] : raw;
+        console.log("Data:", data);
 
         if (response.ok) {
-          const data = await response.json(); // or response.text() if not JSON
-
-          // Display the response — adjust based on your n8n output structure
-          outputEl.innerHTML = data.message;
-
+          // Display fields from your Postgres row
+          outputEl.innerHTML = `
+            <p><strong>Name:</strong> ${data.fn} ${data.mn} ${data.ln}</p>
+            <p><strong>Email:</strong> ${data.email}</p>
+            <p><strong>Status:</strong> ${data.status}</p>
+            <p><strong>Department ID:</strong> ${data.dep_id}</p>
+            <p><strong>Salary:</strong> ${data.salary}</p>
+          `;
         } else {
           outputEl.innerHTML = "Something went wrong.";
         }
