@@ -435,6 +435,7 @@
               <th>Name</th>
               <th>Company</th>
               <th>Status</th>
+              <th>TIN</th>
               <th>Salary</th>
               <th>SSS</th>
               <th>PhilHealth</th>
@@ -489,6 +490,11 @@
               <option value="Resigned">Resigned</option>
               <option value="Terminated">Terminated</option>
             </select>
+          </div>
+
+          <div class="form-group">
+            <label>TIN</label>
+            <input type="text" id="tin" placeholder="Optional" />
           </div>
 
           <div class="form-group">
@@ -588,6 +594,7 @@
               ${emp.employment_status || "N/A"}
             </span>
           </td>
+          <td>${emp.tin || "-"}</td>
           <td>₱${parseFloat(emp.basic_salary || 0).toLocaleString('en-PH', {minimumFractionDigits: 2})}</td>
           <td>₱${parseFloat(emp.sss_employee || 0).toLocaleString('en-PH')}</td>
           <td>₱${parseFloat(emp.philhealth_employee || 0).toLocaleString('en-PH')}</td>
@@ -638,6 +645,7 @@
       document.getElementById("lastName").value = emp.last_name || "";
       document.getElementById("company").value = emp.company || "";
       document.getElementById("employmentStatus").value = emp.employment_status || "";
+      document.getElementById("tin").value = emp.tin || "";
       document.getElementById("basicSalary").value = emp.basic_salary || "";
       document.getElementById("sssEmployee").value = emp.sss_employee || "";
       document.getElementById("philhealthEmployee").value = emp.philhealth_employee || "";
@@ -663,6 +671,7 @@
         last_name: document.getElementById("lastName").value,
         company: document.getElementById("company").value,
         employment_status: document.getElementById("employmentStatus").value,
+        tin: document.getElementById("tin").value || null,
         basic_salary: parseFloat(document.getElementById("basicSalary").value).toFixed(2),
         sss_employee: parseFloat(document.getElementById("sssEmployee").value).toFixed(2),
         philhealth_employee: parseFloat(document.getElementById("philhealthEmployee").value).toFixed(2),
