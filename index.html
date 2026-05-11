@@ -433,7 +433,6 @@
           <thead>
             <tr>
               <th>Name</th>
-              <th>Role ID</th>
               <th>Company</th>
               <th>Status</th>
               <th>Salary</th>
@@ -475,15 +474,9 @@
             </div>
           </div>
 
-          <div class="form-row">
-            <div class="form-group">
-              <label>Role ID *</label>
-              <input type="number" id="roleId" required />
-            </div>
-            <div class="form-group">
-              <label>Company *</label>
-              <input type="text" id="company" required />
-            </div>
+          <div class="form-group">
+            <label>Company *</label>
+            <input type="text" id="company" required />
           </div>
 
           <div class="form-group">
@@ -589,7 +582,6 @@
         const row = document.createElement("tr");
         row.innerHTML = `
           <td><span class="employee-name">${emp.first_name} ${emp.last_name}</span></td>
-          <td>${emp.role_id || "-"}</td>
           <td>${emp.company || "-"}</td>
           <td>
             <span class="status-badge status-${emp.employment_status?.toLowerCase() || 'active'}">
@@ -644,7 +636,6 @@
       
       document.getElementById("firstName").value = emp.first_name || "";
       document.getElementById("lastName").value = emp.last_name || "";
-      document.getElementById("roleId").value = emp.role_id || "";
       document.getElementById("company").value = emp.company || "";
       document.getElementById("employmentStatus").value = emp.employment_status || "";
       document.getElementById("basicSalary").value = emp.basic_salary || "";
@@ -670,7 +661,6 @@
       const data = {
         first_name: document.getElementById("firstName").value,
         last_name: document.getElementById("lastName").value,
-        role_id: parseInt(document.getElementById("roleId").value),
         company: document.getElementById("company").value,
         employment_status: document.getElementById("employmentStatus").value,
         basic_salary: parseFloat(document.getElementById("basicSalary").value).toFixed(2),
