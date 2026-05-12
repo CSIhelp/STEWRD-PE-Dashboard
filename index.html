@@ -513,15 +513,9 @@
             </div>
           </div>
 
-          <div class="form-row">
-            <div class="form-group">
-              <label>Pag-IBIG (Employee) *</label>
-              <input type="number" step="0.01" id="pagibigEmployee" required />
-            </div>
-            <div class="form-group">
-              <label>Withholding Tax *</label>
-              <input type="number" step="0.01" id="withholdingTax" required />
-            </div>
+          <div class="form-group">
+            <label>Pag-IBIG (Employee) *</label>
+            <input type="number" step="0.01" id="pagibigEmployee" required />
           </div>
 
           <div class="form-group">
@@ -650,7 +644,6 @@
       document.getElementById("sssEmployee").value = emp.sss_employee || "";
       document.getElementById("philhealthEmployee").value = emp.philhealth_employee || "";
       document.getElementById("pagibigEmployee").value = emp.pagibig_employee || "";
-      document.getElementById("withholdingTax").value = emp.withholding_tax || "";
       document.getElementById("bankAccount").value = emp.bank_account || "";
       
       document.getElementById("employeeModal").classList.add("active");
@@ -676,9 +669,13 @@
         sss_employee: parseFloat(document.getElementById("sssEmployee").value).toFixed(2),
         philhealth_employee: parseFloat(document.getElementById("philhealthEmployee").value).toFixed(2),
         pagibig_employee: parseFloat(document.getElementById("pagibigEmployee").value).toFixed(2),
-        withholding_tax: parseFloat(document.getElementById("withholdingTax").value).toFixed(2),
         bank_account: document.getElementById("bankAccount").value || null
       };
+
+      // Add generated employee_id for new employees
+      if (editingEmployeeId === null) {
+        data.employee_id = generateEmployeeId();
+      }
 
       try {
         const submitBtn = document.getElementById("submitBtn");
@@ -752,6 +749,14 @@
     document.getElementById("employeeModal").addEventListener("click", (e) => {
       if (e.target.id === "employeeModal") closeModal();
     });
+
+    // Generate random employee ID
+    function generateEmployeeId() {
+      // Generate a unique ID using timestamp + random number
+      const timestamp = Date.now().toString().slice(-6); // Last 6 digits of timestamp
+      const random = Math.floor(Math.random() * 1000).toString().padStart(3, '0'); // 3-digit random
+      return parseInt(timestamp + random); // Combine for unique 9-digit number
+    }
   </script>
 </body>
 </html>
