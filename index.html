@@ -693,7 +693,8 @@
             body: JSON.stringify(data)
           });
         } else {
-          response = await fetch(`${API_BASE}/POST/pe-db/employees`, {
+          // Add new employee using the add-employee endpoint
+          response = await fetch(`${API_BASE}/POST/pe-db/add-employee`, {
             method: "POST",
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify(data)
