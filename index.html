@@ -719,8 +719,10 @@
       if (!confirm(`Delete ${emp.first_name} ${emp.last_name}?`)) return;
 
       try {
-        const response = await fetch(`${API_BASE}/DELETE/pe-db/employees/${emp.id}`, {
-          method: "DELETE"
+        const response = await fetch(`${API_BASE}/POST/pe-db/delete-employee`, {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ id: emp.id })
         });
 
         if (!response.ok) throw new Error("Failed to delete");
