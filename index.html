@@ -692,8 +692,13 @@
 
         let response;
         if (editingEmployeeId !== null) {
-          response = await fetch(`${API_BASE}/PUT/pe-db/employees/${employees[editingEmployeeId].id}`, {
-            method: "PUT",
+          // Edit existing employee using POST endpoint
+          // Add the employee identifier to the data
+          data.id = employees[editingEmployeeId].id;
+          data.employee_id = employees[editingEmployeeId].employee_id;
+          
+          response = await fetch(`${API_BASE}/POST/pe-db/edit-employee`, {
+            method: "POST",
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify(data)
           });
