@@ -543,13 +543,22 @@
     });
 
     // Load employees
-    async function loadEmployees() {
+    async function loadEmployees(showLoading = true) {
       const loadingState = document.getElementById("loadingState");
       const tableContent = document.getElementById("tableContent");
       const emptyState = document.getElementById("emptyState");
 
+      // Show loading indicator during refresh
+      if (showLoading) {
+        loadingState.style.display = "block";
+        tableContent.style.display = "none";
+        emptyState.style.display = "none";
+      }
+
       try {
-        const response = await fetch(`${API_BASE}/GET/pe-db/employees`);
+        // Add cache-busting parameter to always get fresh data
+        const cacheBuster = `?t=${Date.now()}`;
+        const response = await fetch(`${API_BASE}/GET/pe-db/employees${cacheBuster}`);
         if (!response.ok) throw new Error("Failed to fetch");
 
         const data = await response.json();
