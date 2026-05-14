@@ -555,6 +555,14 @@
         const data = await response.json();
         employees = Array.isArray(data) ? data : [data];
         
+        console.log("=== LOADED EMPLOYEES ===");
+        console.log("Total employees:", employees.length);
+        if (employees.length > 0) {
+          console.log("First employee sample:", employees[0]);
+          console.log("Fields in first employee:", Object.keys(employees[0]));
+        }
+        console.log("========================");
+        
         loadingState.style.display = "none";
 
         if (employees.length === 0) {
@@ -716,14 +724,35 @@
     // Delete employee
     async function deleteEmployee(index) {
       const emp = employees[index];
+      
+      console.log("=== DELETE DEBUG ===");
+      console.log("Full employee data:", emp);
+      console.log("emp.id:", emp.id);
+      console.log("emp.employee_id:", emp.employee_id);
+      console.log("==================");
+      
       if (!confirm(`Delete ${emp.first_name} ${emp.last_name}?`)) return;
 
       try {
+        // Send all identifying information we have
+        const deletePayload = {
+          id: emp.id,
+          employee_id: emp.employee_id,
+          first_name: emp.first_name,
+          last_name: emp.last_name,
+          company: emp.company
+        };
+        
+        console.log("Sending delete payload:", deletePayload);
+        console.log("Stringified:", JSON.stringify(deletePayload));
+        
         const response = await fetch(`${API_BASE}/POST/pe-db/delete-employee`, {
           method: "POST",
           headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({ id: emp.id })
+          body: JSON.stringify(deletePayload)
         });
+
+        console.log("Delete response status:", response.status);
 
         if (!response.ok) throw new Error("Failed to delete");
 
