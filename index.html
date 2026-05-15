@@ -31,6 +31,77 @@
       color: var(--text);
       line-height: 1.6;
       -webkit-font-smoothing: antialiased;
+      display: flex;
+      margin: 0;
+      padding: 0;
+    }
+
+    /* Side Navigation */
+    .sidenav {
+      width: 250px;
+      background: var(--surface);
+      border-right: 1px solid var(--border);
+      height: 100vh;
+      position: fixed;
+      left: 0;
+      top: 0;
+      overflow-y: auto;
+      z-index: 100;
+    }
+
+    .sidenav-header {
+      padding: 1.5rem 1rem;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .sidenav-title {
+      font-size: 1.125rem;
+      font-weight: 600;
+      color: var(--text);
+    }
+
+    .sidenav-menu {
+      padding: 1rem 0;
+    }
+
+    .sidenav-item {
+      padding: 0.75rem 1rem;
+      cursor: pointer;
+      transition: all 0.2s;
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      font-size: 0.875rem;
+      color: var(--text-light);
+      border-left: 3px solid transparent;
+      user-select: none;
+    }
+
+    .sidenav-item:hover {
+      background: var(--background);
+      color: var(--text);
+    }
+
+    .sidenav-item.active {
+      background: var(--background);
+      color: var(--primary);
+      border-left-color: var(--primary);
+      font-weight: 500;
+    }
+
+    .sidenav-icon {
+      font-size: 1.125rem;
+    }
+
+    /* Main Content Area */
+    .main-content {
+      margin-left: 250px;
+      flex: 1;
+      min-height: 100vh;
+    }
+
+    .page-content {
+      width: 100%;
     }
 
     .container {
@@ -370,6 +441,18 @@
 
     /* Responsive */
     @media (max-width: 768px) {
+      .sidenav {
+        width: 100%;
+        height: auto;
+        position: relative;
+        border-right: none;
+        border-bottom: 1px solid var(--border);
+      }
+
+      .main-content {
+        margin-left: 0;
+      }
+
       .container {
         padding: 1rem;
       }
@@ -404,7 +487,28 @@
   </style>
 </head>
 <body>
-  <div class="container">
+  <!-- Side Navigation -->
+  <div class="sidenav">
+    <div class="sidenav-header">
+      <div class="sidenav-title">HR Dashboard</div>
+    </div>
+    <div class="sidenav-menu">
+      <div class="sidenav-item active" onclick="showPage('employee-database')">
+        <span class="sidenav-icon">👥</span>
+        <span>Employee Database</span>
+      </div>
+      <div class="sidenav-item" onclick="showPage('employee-liabilities')">
+        <span class="sidenav-icon">📊</span>
+        <span>Employee Liabilities</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- Main Content -->
+  <div class="main-content">
+    <!-- Employee Database Page -->
+    <div id="employee-database-page" class="page-content">
+      <div class="container">
     <!-- Header -->
     <div class="header">
       <h1>Employee Management</h1>
@@ -457,6 +561,52 @@
       </div>
     </div>
   </div>
+    </div><!-- End Employee Database Page -->
+
+    <!-- Employee Liabilities Page -->
+    <div id="employee-liabilities-page" class="page-content" style="display: none;">
+      <div class="container">
+        <!-- Header -->
+        <div class="header">
+          <h1>Employee Liabilities</h1>
+          <button class="btn btn-secondary" onclick="loadLiabilities()">
+            🔄 Refresh
+          </button>
+        </div>
+
+        <!-- Liabilities Table -->
+        <div class="table-wrapper">
+          <div id="liabilitiesLoadingState" class="loading">
+            <div class="spinner"></div>
+            <p>Loading liabilities...</p>
+          </div>
+          
+          <div id="liabilitiesTableContent" style="display: none;">
+            <table>
+              <thead>
+                <tr>
+                  <th>Employee Name</th>
+                  <th>Company</th>
+                  <th>SSS (Employee)</th>
+                  <th>SSS (Employer)</th>
+                  <th>PhilHealth (Employee)</th>
+                  <th>PhilHealth (Employer)</th>
+                  <th>Pag-IBIG (Employee)</th>
+                  <th>Pag-IBIG (Employer)</th>
+                  <th>Total Liabilities</th>
+                </tr>
+              </thead>
+              <tbody id="liabilitiesTableBody"></tbody>
+            </table>
+          </div>
+
+          <div id="liabilitiesEmptyState" class="empty-state" style="display: none;">
+            <p>No liabilities data found</p>
+          </div>
+        </div>
+      </div>
+    </div><!-- End Employee Liabilities Page -->
+  </div><!-- End Main Content -->
 
   <!-- Modal -->
   <div class="modal-overlay" id="employeeModal">
@@ -797,6 +947,100 @@
     document.getElementById("employeeModal").addEventListener("click", (e) => {
       if (e.target.id === "employeeModal") closeModal();
     });
+
+    // Page Navigation
+    function showPage(pageId) {
+      // Hide all pages
+      document.getElementById('employee-database-page').style.display = 'none';
+      document.getElementById('employee-liabilities-page').style.display = 'none';
+      
+      // Remove active class from all nav items
+      document.querySelectorAll('.sidenav-item').forEach(item => {
+        item.classList.remove('active');
+      });
+      
+      // Show selected page
+      if (pageId === 'employee-database') {
+        document.getElementById('employee-database-page').style.display = 'block';
+        document.querySelectorAll('.sidenav-item')[0].classList.add('active');
+      } else if (pageId === 'employee-liabilities') {
+        document.getElementById('employee-liabilities-page').style.display = 'block';
+        document.querySelectorAll('.sidenav-item')[1].classList.add('active');
+        // Load liabilities data when page is shown
+        loadLiabilities();
+      }
+    }
+
+    // Employee Liabilities Functions
+    let liabilities = [];
+
+    async function loadLiabilities() {
+      const loadingState = document.getElementById("liabilitiesLoadingState");
+      const tableContent = document.getElementById("liabilitiesTableContent");
+      const emptyState = document.getElementById("liabilitiesEmptyState");
+
+      loadingState.style.display = "block";
+      tableContent.style.display = "none";
+      emptyState.style.display = "none";
+
+      try {
+        const cacheBuster = `?t=${Date.now()}`;
+        const response = await fetch(`${API_BASE}/GET/pe-db/employee-liabilities${cacheBuster}`);
+        if (!response.ok) throw new Error("Failed to fetch liabilities");
+
+        const data = await response.json();
+        liabilities = Array.isArray(data) ? data : [data];
+        
+        console.log("=== LOADED LIABILITIES ===");
+        console.log("Total records:", liabilities.length);
+        console.log("========================");
+        
+        loadingState.style.display = "none";
+
+        if (liabilities.length === 0) {
+          emptyState.style.display = "block";
+        } else {
+          tableContent.style.display = "block";
+          renderLiabilities(liabilities);
+        }
+      } catch (error) {
+        console.error("Error loading liabilities:", error);
+        loadingState.innerHTML = `
+          <p style="color: var(--danger);">Failed to load liabilities</p>
+          <button class="btn btn-primary btn-sm" onclick="loadLiabilities()" style="margin-top: 1rem;">Retry</button>
+        `;
+        showToast("Failed to load liabilities", "error");
+      }
+    }
+
+    function renderLiabilities(data) {
+      const tbody = document.getElementById("liabilitiesTableBody");
+      tbody.innerHTML = "";
+
+      data.forEach((item) => {
+        const totalLiabilities = 
+          parseFloat(item.sss_employee || 0) + 
+          parseFloat(item.sss_employer || 0) +
+          parseFloat(item.philhealth_employee || 0) + 
+          parseFloat(item.philhealth_employer || 0) +
+          parseFloat(item.pagibig_employee || 0) + 
+          parseFloat(item.pagibig_employer || 0);
+
+        const row = document.createElement("tr");
+        row.innerHTML = `
+          <td><span class="employee-name">${item.first_name || ''} ${item.last_name || ''}</span></td>
+          <td>${item.company || "-"}</td>
+          <td>₱${parseFloat(item.sss_employee || 0).toLocaleString('en-PH', {minimumFractionDigits: 2})}</td>
+          <td>₱${parseFloat(item.sss_employer || 0).toLocaleString('en-PH', {minimumFractionDigits: 2})}</td>
+          <td>₱${parseFloat(item.philhealth_employee || 0).toLocaleString('en-PH', {minimumFractionDigits: 2})}</td>
+          <td>₱${parseFloat(item.philhealth_employer || 0).toLocaleString('en-PH', {minimumFractionDigits: 2})}</td>
+          <td>₱${parseFloat(item.pagibig_employee || 0).toLocaleString('en-PH', {minimumFractionDigits: 2})}</td>
+          <td>₱${parseFloat(item.pagibig_employer || 0).toLocaleString('en-PH', {minimumFractionDigits: 2})}</td>
+          <td><strong>₱${totalLiabilities.toLocaleString('en-PH', {minimumFractionDigits: 2})}</strong></td>
+        `;
+        tbody.appendChild(row);
+      });
+    }
 
     // Generate random employee ID
     function generateEmployeeId() {
